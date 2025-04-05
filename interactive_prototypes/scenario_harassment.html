@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سيناريوهات التحرش - تعليم السمية عبر الإنترنت</title>
+    <style>
+        :root {
+            --primary-color: #4e54c8;
+            --secondary-color: #8f94fb;
+            --accent-color: #ff6b6b;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --text-color: #333;
+            --light-bg: #f9f9f9;
+            --card-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            --transition-speed: 0.3s;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #00b4db, #0083b0);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 10px;
+        }
+        
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .breadcrumbs {
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .breadcrumbs a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+        }
+        
+        .intro {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .intro-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .scenario-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .scenario {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .scenario-header {
+            background-color: #00b4db;
+            color: white;
+            padding: 15px 20px;
+        }
+        
+        .scenario-title {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+        
+        .scenario-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .scenario-content {
+            padding: 20px;
+        }
+        
+        .scenario-description {
+            margin-bottom: 20px;
+        }
+        
+        .chat-container {
+            background-color: #f5f5f5;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .message-bubble {
+            max-width: 80%;
+            margin-bottom: 15px;
+            padding: 12px 15px;
+            border-radius: 18px;
+            position: relative;
+            font-size: 0.95rem;
+        }
+        
+        .received {
+            background-color: #e5e5ea;
+            align-self: flex-start;
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .sent {
+            background-color: #dcf8c6;
+            align-self: flex-end;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+            text-align: right;
+        }
+        
+        .message-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .message-sender {
+            font-weight: bold;
+            margin-left: 8px;
+        }
+        
+        .message-time {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        
+        .message-content {
+            word-break: break-word;
+        }
+        
+        .impact-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .impact-title {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .response-options {
+            margin-top: 20px;
+        }
+        
+        .response-title {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: background-color var(--transition-speed);
+        }
+        
+        .option:hover {
+            background-color: #e5e5ea;
+        }
+        
+        .option.recommended {
+            border-right: 4px solid var(--success-color);
+        }
+        
+        .option.not-recommended {
+            border-right: 4px solid var(--danger-color);
+        }
+        
+        .option-label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        
+        .expert-tip {
+            background-color: rgba(0, 180, 219, 0.1);
+            border-right: 4px solid #00b4db;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px 0 0 8px;
+        }
+        
+        .expert-tip-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #00b4db;
+        }
+        
+        .resources {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .resources-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .resources-list {
+            list-style-type: none;
+        }
+        
+        .resources-list li {
+            margin-bottom: 10px;
+            padding-right: 20px;
+            position: relative;
+        }
+        
+        .resources-list li::before {
+            content: "•";
+            position: absolute;
+            right: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .resources-list a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .resources-list a:hover {
+            text-decoration: underline;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+        
+        .nav-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color var(--transition-speed);
+        }
+        
+        .nav-button:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .back-to-home {
+            background-color: #6c757d;
+        }
+        
+        .back-to-home:hover {
+            background-color: #5a6268;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .scenario-title {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>سيناريوهات التحرش</h1>
+                <p class="subtitle">فهم وتمييز والاستجابة للتحرش عبر الإنترنت</p>
+            </div>
+        </header>
+        
+        <div class="breadcrumbs">
+            <a href="../index.html">الرئيسية</a> &gt; <a href="../index.html#understand-section">فهم السمية عبر الإنترنت</a> &gt; سيناريوهات التحرش
+        </div>
+        
+        <div class="intro">
+            <h2 class="intro-title">ما هو التحرش عبر الإنترنت؟</h2>
+            <p>التحرش عبر الإنترنت هو سلوك متكرر وغير مرغوب فيه يستهدف شخصًا معينًا ويسبب له الضيق أو الخوف أو الإحراج. يمكن أن يشمل رسائل متكررة غير مرغوب فيها، وتعليقات مسيئة، وتهديدات، ومتابعة أنشطة الشخص عبر منصات متعددة، وغيرها من السلوكيات التي تخلق بيئة عدائية أو مخيفة.</p>
+            <p>توضح السيناريوهات التالية الأشكال الشائعة للتحرش عبر الإنترنت وتقدم إرشادات حول كيفية الاستجابة بفعالية.</p>
+        </div>
+        
+        <div class="scenario-container">
+            <div class="scenario">
+                <div class="scenario-header">
+                    <h3 class="scenario-title">السيناريو 1: الرسائل المتكررة غير المرغوب فيها</h3>
+                    <p class="scenario-subtitle">تطبيق المراسلة</p>
+                </div>
+                <div class="scenario-content">
+                    <div class="scenario-description">
+                        <p>سارة، 16 عامًا، تتلقى رسائل متكررة من زميل سابق في المدرسة، خالد، الذي يستمر في الاتصال بها رغم طلبها منه التوقف. أصبحت الرسائل أكثر إلحاحًا وتهديدًا بمرور الوقت.</p>
+                    </div>
+                    
+                    <div class="chat-container">
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">خالد:</span>
+                                <span class="message-time">7:15 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>مرحبًا سارة، لماذا لا تردين على رسائلي؟ أنا أفكر فيك طوال الوقت.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble sent">
+                            <div class="message-info">
+                                <span class="message-sender">سارة:</span>
+                                <span class="message-time">7:30 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>خالد، لقد طلبت منك من قبل عدم مراسلتي. أرجو أن تحترم رغبتي.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">خالد:</span>
+                                <span class="message-time">7:32 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>لكنني أحتاج فقط إلى التحدث معك. لماذا تتجاهلينني؟ سأستمر في المحاولة حتى تردي.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">خالد:</span>
+                                <span class="message-time">8:15 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>رأيتك اليوم في المركز التجاري. أعجبني قميصك الأزرق. لماذا كنت مع أصدقائك ولم تتحدثي معي؟</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">خالد:</span>
+                                <span class="message-time">9:45 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>إذا استمريت في تجاهلي، سأضطر للتحدث مع أصدقائك وعائلتك. أعرف أين تعيشين وأين تذهبين للدراسة.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="impact-section">
+                        <h4 class="impact-title">التأثير المحتمل:</h4>
+                        <p>يمكن أن يؤدي التحرش عبر الرسائل المتكررة إلى:</p>
+                        <ul>
+                            <li>الشعور بالخوف والقلق المستمر</li>
+                            <li>الضغط النفسي والتوتر</li>
+                            <li>تغيير العادات اليومية خوفًا من مواجهة المتحرش</li>
+                            <li>الانسحاب من الأنشطة الاجتماعية</li>
+                            <li>مشاكل في النوم والتركيز</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="response-options">
+                        <h4 class="response-title">خيارات الاستجابة:</h4>
+                        
+                        <div class="options-container">
+                            <div class="option recommended">
+                                <span class="option-label">موصى به: حظر، توثيق، وإبلاغ</span>
+                                <p>يجب على سارة حظر خالد على جميع منصات التواصل الاجتماعي وتطبيقات المراسلة.</p>
+                                <p>من المهم الاحتفاظ بسجل للرسائل (لقطات شاشة) كدليل، وإبلاغ الوالدين أو شخص بالغ موثوق به.</p>
+                                <p>إذا تضمنت الرسائل تهديدات، يجب التفكير في إبلاغ المدرسة أو الشرطة.</p>
+                            </div>
+                            
+                            <div class="option not-recommended">
+                                <span class="option-label">غير موصى به: الاستمرار في الرد</span>
+                                <p>الاستمرار في الرد على الرسائل، حتى لطلب التوقف، قد يشجع المتحرش على الاستمرار لأنه يحصل على الاهتمام الذي يسعى إليه.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="expert-tip">
+                            <div class="expert-tip-title">نصيحة الخبير:</div>
+                            <p>عند التعامل مع المتحرشين عبر الإنترنت، اتبع قاعدة "حظر وتجاهل". لا ترد على استفزازاتهم أو تهديداتهم، لأن أي تفاعل قد يشجعهم على الاستمرار. استخدم إعدادات الخصوصية على جميع منصاتك لتقييد من يمكنه الاتصال بك، وراجع هذه الإعدادات بانتظام.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="scenario">
+                <div class="scenario-header">
+                    <h3 class="scenario-title">السيناريو 2: التعليقات المسيئة المستمرة</h3>
+                    <p class="scenario-subtitle">منصة مشاركة الفيديو</p>
+                </div>
+                <div class="scenario-content">
+                    <div class="scenario-description">
+                        <p>أحمد، 14 عامًا، بدأ قناة على منصة مشاركة الفيديو لمشاركة مقاطع فيديو عن هوايته في الرسم. مستخدم مجهول يترك تعليقات مسيئة ومهينة على كل فيديو ينشره، مستهدفًا مظهره وصوته وموهبته.</p>
+                    </div>
+                    
+                    <div class="chat-container">
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">أحمد:</span>
+                                <span class="message-time">2:00 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>مرحبًا بالجميع! في فيديو اليوم سأريكم كيفية رسم المنظر الطبيعي باستخدام الألوان المائية.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">معجب_1:</span>
+                                <span class="message-time">2:15 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>فيديو رائع! شكرًا على النصائح المفيدة.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">مستخدم_مجهول:</span>
+                                <span class="message-time">2:20 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>صوتك مزعج جدًا ومظهرك سيء. لا أحد يريد مشاهدة هذه الفيديوهات السيئة. أنت لا تملك أي موهبة.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">أحمد:</span>
+                                <span class="message-time">3:30 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>فيديو جديد! اليوم سأشارككم تقنيات الرسم بالفحم.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">مستخدم_مجهول:</span>
+                                <span class="message-time">3:35 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>ما زلت تنشر هذه الفيديوهات السيئة؟ أنت فاشل تمامًا. يجب أن تتوقف وتختفي من الإنترنت.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="impact-section">
+                        <h4 class="impact-title">التأثير المحتمل:</h4>
+                        <p>يمكن أن تؤدي التعليقات المسيئة المستمرة إلى:</p>
+                        <ul>
+                            <li>انخفاض الثقة بالنفس وتقدير الذات</li>
+                            <li>التردد في مشاركة المحتوى الإبداعي</li>
+                            <li>الشعور بالإحباط والاكتئاب</li>
+                            <li>التخلي عن الهوايات والاهتمامات</li>
+                            <li>الخوف من التعبير عن الذات</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="response-options">
+                        <h4 class="response-title">خيارات الاستجابة:</h4>
+                        
+                        <div class="options-container">
+                            <div class="option recommended">
+                                <span class="option-label">موصى به: تصفية التعليقات والإبلاغ</span>
+                                <p>يمكن لأحمد تكوين إعدادات التعليقات لتصفية الكلمات المسيئة أو تمكين الاعتدال المسبق للتعليقات.</p>
+                                <p>يجب عليه حظر المستخدم المسيء والإبلاغ عنه إلى المنصة لانتهاك شروط الخدمة.</p>
+                                <p>من المفيد أيضًا التركيز على التعليقات الإيجابية وتثبيتها في أعلى قسم التعليقات.</p>
+                            </div>
+                            
+                            <div class="option not-recommended">
+                                <span class="option-label">غير موصى به: الرد على التعليقات المسيئة</span>
+                                <p>الدخول في جدال مع المتحرش قد يؤدي إلى تصعيد الموقف ويعطيه الاهتمام الذي يسعى إليه، مما قد يشجعه على الاستمرار.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="expert-tip">
+                            <div class="expert-tip-title">نصيحة الخبير:</div>
+                            <p>بناء مجتمع داعم حول محتواك يمكن أن يساعد في مواجهة التحرش. شجع المشاهدين الإيجابيين على المشاركة والتفاعل، واشكرهم على دعمهم. يمكن أن يساعد وجود مجتمع داعم في تخفيف تأثير التعليقات السلبية وتوفير منظور أكثر توازنًا.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="resources">
+            <h3 class="resources-title">موارد إضافية</h3>
+            <ul class="resources-list">
+                <li><a href="#">مركز مكافحة التحرش الإلكتروني</a> - دعم للأشخاص الذين يتعرضون للتحرش عبر الإنترنت</li>
+                <li><a href="#">دليل إعدادات الخصوصية</a> - كيفية تأمين حساباتك على وسائل التواصل الاجتماعي</li>
+                <li><a href="#">خط المساعدة للشباب</a> - خدمة استشارية سرية للشباب الذين يواجهون مشاكل عبر الإنترنت</li>
+                <li><a href="#">كيفية توثيق التحرش</a> - دليل خطوة بخطوة لتوثيق حالات التحرش عبر الإنترنت</li>
+            </ul>
+        </div>
+        
+        <div class="navigation-buttons">
+            <a href="scenario_hate_speech.html" class="nav-button back-to-home">&larr; السابق: خطاب الكراهية</a>
+            <a href="scenario_exclusion.html" class="nav-button">التالي: الإقصاء &rarr;</a>
+        </div>
+    </div>
+</body>
+</html>

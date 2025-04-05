@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سيناريوهات انتهاكات الخصوصية - تعليم السمية عبر الإنترنت</title>
+    <style>
+        :root {
+            --primary-color: #4e54c8;
+            --secondary-color: #8f94fb;
+            --accent-color: #ff6b6b;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --text-color: #333;
+            --light-bg: #f9f9f9;
+            --card-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            --transition-speed: 0.3s;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #9733EE, #DA22FF);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 10px;
+        }
+        
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .breadcrumbs {
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .breadcrumbs a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+        }
+        
+        .intro {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .intro-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .scenario-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .scenario {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .scenario-header {
+            background-color: #9733EE;
+            color: white;
+            padding: 15px 20px;
+        }
+        
+        .scenario-title {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+        
+        .scenario-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .scenario-content {
+            padding: 20px;
+        }
+        
+        .scenario-description {
+            margin-bottom: 20px;
+        }
+        
+        .chat-container {
+            background-color: #f5f5f5;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .message-bubble {
+            max-width: 80%;
+            margin-bottom: 15px;
+            padding: 12px 15px;
+            border-radius: 18px;
+            position: relative;
+            font-size: 0.95rem;
+        }
+        
+        .received {
+            background-color: #e5e5ea;
+            align-self: flex-start;
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .sent {
+            background-color: #dcf8c6;
+            align-self: flex-end;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+            text-align: right;
+        }
+        
+        .message-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .message-sender {
+            font-weight: bold;
+            margin-left: 8px;
+        }
+        
+        .message-time {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        
+        .message-content {
+            word-break: break-word;
+        }
+        
+        .impact-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .impact-title {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .response-options {
+            margin-top: 20px;
+        }
+        
+        .response-title {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: background-color var(--transition-speed);
+        }
+        
+        .option:hover {
+            background-color: #e5e5ea;
+        }
+        
+        .option.recommended {
+            border-right: 4px solid var(--success-color);
+        }
+        
+        .option.not-recommended {
+            border-right: 4px solid var(--danger-color);
+        }
+        
+        .option-label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        
+        .expert-tip {
+            background-color: rgba(151, 51, 238, 0.1);
+            border-right: 4px solid #9733EE;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px 0 0 8px;
+        }
+        
+        .expert-tip-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #9733EE;
+        }
+        
+        .resources {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .resources-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .resources-list {
+            list-style-type: none;
+        }
+        
+        .resources-list li {
+            margin-bottom: 10px;
+            padding-right: 20px;
+            position: relative;
+        }
+        
+        .resources-list li::before {
+            content: "•";
+            position: absolute;
+            right: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .resources-list a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .resources-list a:hover {
+            text-decoration: underline;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+        
+        .nav-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color var(--transition-speed);
+        }
+        
+        .nav-button:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .back-to-home {
+            background-color: #6c757d;
+        }
+        
+        .back-to-home:hover {
+            background-color: #5a6268;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .scenario-title {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>سيناريوهات انتهاكات الخصوصية</h1>
+                <p class="subtitle">فهم وتمييز والاستجابة لانتهاكات الخصوصية عبر الإنترنت</p>
+            </div>
+        </header>
+        
+        <div class="breadcrumbs">
+            <a href="../index.html">الرئيسية</a> &gt; <a href="../index.html#understand-section">فهم السمية عبر الإنترنت</a> &gt; سيناريوهات انتهاكات الخصوصية
+        </div>
+        
+        <div class="intro">
+            <h2 class="intro-title">ما هي انتهاكات الخصوصية عبر الإنترنت؟</h2>
+            <p>انتهاكات الخصوصية عبر الإنترنت تحدث عندما يتم الكشف عن المعلومات الشخصية أو الخاصة لشخص ما أو استخدامها أو مشاركتها دون إذنه. يمكن أن تشمل مشاركة الصور الخاصة، أو نشر المعلومات الشخصية، أو اختراق الحسابات، أو مراقبة الأنشطة عبر الإنترنت دون موافقة.</p>
+            <p>توضح السيناريوهات التالية الأشكال الشائعة لانتهاكات الخصوصية عبر الإنترنت وتقدم إرشادات حول كيفية الاستجابة بفعالية.</p>
+        </div>
+        
+        <div class="scenario-container">
+            <div class="scenario">
+                <div class="scenario-header">
+                    <h3 class="scenario-title">السيناريو 1: مشاركة صور خاصة دون إذن</h3>
+                    <p class="scenario-subtitle">تطبيق مشاركة الصور</p>
+                </div>
+                <div class="scenario-content">
+                    <div class="scenario-description">
+                        <p>سارة، 15 عامًا، شاركت صورًا من حفلة عيد ميلادها في مجموعة خاصة مع أصدقائها المقربين. اكتشفت لاحقًا أن إحدى الصور التي ظهرت فيها بوضع محرج تم مشاركتها على نطاق أوسع من قبل أحد الأصدقاء دون إذنها.</p>
+                    </div>
+                    
+                    <div class="chat-container">
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">نورة:</span>
+                                <span class="message-time">3:15 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>سارة، هل رأيت أن ليلى شاركت صورتك من الحفلة على حسابها العام؟ الكثير من الأشخاص يعلقون عليها.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble sent">
+                            <div class="message-info">
+                                <span class="message-sender">سارة:</span>
+                                <span class="message-time">3:17 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>ماذا؟! أي صورة؟</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">نورة:</span>
+                                <span class="message-time">3:18 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>تلك التي سقطت فيها على الكعكة. أرسل لك لقطة شاشة.</p>
+                                <p>[صورة: لقطة شاشة لمنشور على وسائل التواصل الاجتماعي]</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble sent">
+                            <div class="message-info">
+                                <span class="message-sender">سارة:</span>
+                                <span class="message-time">3:20 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>لا أصدق هذا! شاركت هذه الصور في مجموعتنا الخاصة فقط. لم أعط أي شخص الإذن بمشاركتها علنًا. أشعر بالإحراج الشديد الآن.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="impact-section">
+                        <h4 class="impact-title">التأثير المحتمل:</h4>
+                        <p>يمكن أن تؤدي مشاركة الصور الخاصة دون إذن إلى:</p>
+                        <ul>
+                            <li>الإحراج والضيق العاطفي</li>
+                            <li>الضرر المحتمل للسمعة</li>
+                            <li>فقدان الثقة في الأصدقاء</li>
+                            <li>القلق بشأن من شاهد الصورة</li>
+                            <li>التردد في المشاركة في الأنشطة الاجتماعية مستقبلاً</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="response-options">
+                        <h4 class="response-title">خيارات الاستجابة:</h4>
+                        
+                        <div class="options-container">
+                            <div class="option recommended">
+                                <span class="option-label">موصى به: طلب الإزالة والتواصل المباشر</span>
+                                <p>يجب على سارة الاتصال بليلى مباشرة وطلب إزالة الصورة على الفور، موضحة أنها لم تعط إذنًا بمشاركتها.</p>
+                                <p>إذا لم تستجب ليلى، يمكن لسارة الإبلاغ عن المنشور إلى المنصة لانتهاك الخصوصية.</p>
+                                <p>من المهم أيضًا إخبار الوالدين أو شخص بالغ موثوق به إذا استمرت المشكلة.</p>
+                            </div>
+                            
+                            <div class="option not-recommended">
+                                <span class="option-label">غير موصى به: الرد العلني الغاضب</span>
+                                <p>نشر تعليقات غاضبة على المنشور قد يؤدي إلى لفت المزيد من الانتباه إلى الصورة ويمكن أن يؤدي إلى تصعيد الموقف.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="expert-tip">
+                            <div class="expert-tip-title">نصيحة الخبير:</div>
+                            <p>قبل مشاركة أي صور، حتى في المجموعات الخاصة، فكر في ما إذا كنت ستشعر بالراحة إذا رآها جمهور أوسع. ناقش توقعات الخصوصية مع أصدقائك مسبقًا، وأوضح أن الصور المشتركة في مجموعة خاصة يجب ألا تتم مشاركتها خارجها دون إذن صريح.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="scenario">
+                <div class="scenario-header">
+                    <h3 class="scenario-title">السيناريو 2: الوصول غير المصرح به إلى الحساب</h3>
+                    <p class="scenario-subtitle">منصة التواصل الاجتماعي</p>
+                </div>
+                <div class="scenario-content">
+                    <div class="scenario-description">
+                        <p>أحمد، 14 عامًا، اكتشف أن شخصًا ما تمكن من الوصول إلى حسابه على وسائل التواصل الاجتماعي. قام المتسلل بقراءة رسائله الخاصة وبدأ في إرسال رسائل لأصدقائه متظاهرًا بأنه أحمد.</p>
+                    </div>
+                    
+                    <div class="chat-container">
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">محمد:</span>
+                                <span class="message-time">5:30 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>أحمد، لماذا تطلب مني كلمة المرور الخاصة بحسابي؟ هذا غريب.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble sent">
+                            <div class="message-info">
+                                <span class="message-sender">أحمد:</span>
+                                <span class="message-time">5:45 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>محمد، أنا لم أرسل لك أي رسالة تطلب كلمة المرور! يبدو أن شخصًا ما اخترق حسابي. هل يمكنك إخباري بالضبط ماذا قال؟</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">محمد:</span>
+                                <span class="message-time">5:47 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>قال إنه يحتاج إلى كلمة المرور الخاصة بي للمساعدة في اختبار تطبيق جديد. كنت أعرف أن هذا لا يبدو مثلك! هل أنت بخير؟ هل تحتاج إلى مساعدة؟</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble sent">
+                            <div class="message-info">
+                                <span class="message-sender">أحمد:</span>
+                                <span class="message-time">5:50 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>أنا قلق جدًا. لا أعرف من وصل إلى حسابي أو ما الذي قرأه من رسائلي الخاصة. سأغير كلمة المرور الخاصة بي على الفور وأبلغ المنصة.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="impact-section">
+                        <h4 class="impact-title">التأثير المحتمل:</h4>
+                        <p>يمكن أن يؤدي الوصول غير المصرح به إلى الحساب إلى:</p>
+                        <ul>
+                            <li>انتهاك خصوصية المحادثات والمعلومات الشخصية</li>
+                            <li>سرقة الهوية أو الاحتيال</li>
+                            <li>الإضرار بالعلاقات من خلال إرسال رسائل مزيفة</li>
+                            <li>فقدان الشعور بالأمان والخصوصية</li>
+                            <li>القلق المستمر بشأن ما تم الوصول إليه أو مشاركته</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="response-options">
+                        <h4 class="response-title">خيارات الاستجابة:</h4>
+                        
+                        <div class="options-container">
+                            <div class="option recommended">
+                                <span class="option-label">موصى به: تأمين الحساب والإبلاغ</span>
+                                <p>يجب على أحمد تغيير كلمة المرور الخاصة به على الفور وتفعيل المصادقة الثنائية إن أمكن.</p>
+                                <p>من المهم إبلاغ المنصة عن الاختراق وطلب مساعدتهم في تأمين الحساب.</p>
+                                <p>يجب عليه إخبار جميع أصدقائه بأن حسابه تم اختراقه وتحذيرهم من الاستجابة لأي طلبات غريبة.</p>
+                            </div>
+                            
+                            <div class="option not-recommended">
+                                <span class="option-label">غير موصى به: تجاهل المشكلة</span>
+                                <p>تجاهل الاختراق يمكن أن يؤدي إلى مزيد من انتهاكات الخصوصية والضرر المحتمل لك ولأصدقائك.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="expert-tip">
+                            <div class="expert-tip-title">نصيحة الخبير:</div>
+                            <p>استخدم كلمات مرور فريدة وقوية لكل حساب، وقم بتغييرها بانتظام. فعّل المصادقة الثنائية على جميع حساباتك المهمة، وتجنب حفظ كلمات المرور على أجهزة مشتركة أو عامة. راجع بانتظام إعدادات الخصوصية والأمان لحساباتك للتأكد من أنها محدثة ومؤمنة.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="resources">
+            <h3 class="resources-title">موارد إضافية</h3>
+            <ul class="resources-list">
+                <li><a href="#">دليل حماية الخصوصية عبر الإنترنت</a> - نصائح شاملة لحماية معلوماتك الشخصية</li>
+                <li><a href="#">كيفية تأمين حساباتك</a> - خطوات لمنع الوصول غير المصرح به</li>
+                <li><a href="#">حقوقك في الخصوصية</a> - معلومات حول القوانين والحقوق المتعلقة بالخصوصية عبر الإنترنت</li>
+                <li><a href="#">الإبلاغ عن انتهاكات الخصوصية</a> - دليل للإبلاغ على مختلف المنصات</li>
+            </ul>
+        </div>
+        
+        <div class="navigation-buttons">
+            <a href="scenario_misinformation.html" class="nav-button back-to-home">&larr; السابق: المعلومات المضللة</a>
+            <a href="scenario_scams.html" class="nav-button">التالي: عمليات الاحتيال &rarr;</a>
+        </div>
+    </div>
+</body>
+</html>

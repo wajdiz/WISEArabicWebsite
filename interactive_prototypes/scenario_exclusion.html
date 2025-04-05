@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سيناريوهات الإقصاء - تعليم السمية عبر الإنترنت</title>
+    <style>
+        :root {
+            --primary-color: #4e54c8;
+            --secondary-color: #8f94fb;
+            --accent-color: #ff6b6b;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --text-color: #333;
+            --light-bg: #f9f9f9;
+            --card-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            --transition-speed: 0.3s;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #6a3093, #a044ff);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 10px;
+        }
+        
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .breadcrumbs {
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .breadcrumbs a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+        }
+        
+        .intro {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .intro-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .scenario-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .scenario {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .scenario-header {
+            background-color: #6a3093;
+            color: white;
+            padding: 15px 20px;
+        }
+        
+        .scenario-title {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+        
+        .scenario-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .scenario-content {
+            padding: 20px;
+        }
+        
+        .scenario-description {
+            margin-bottom: 20px;
+        }
+        
+        .chat-container {
+            background-color: #f5f5f5;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .message-bubble {
+            max-width: 80%;
+            margin-bottom: 15px;
+            padding: 12px 15px;
+            border-radius: 18px;
+            position: relative;
+            font-size: 0.95rem;
+        }
+        
+        .received {
+            background-color: #e5e5ea;
+            align-self: flex-start;
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .sent {
+            background-color: #dcf8c6;
+            align-self: flex-end;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+            text-align: right;
+        }
+        
+        .message-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .message-sender {
+            font-weight: bold;
+            margin-left: 8px;
+        }
+        
+        .message-time {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        
+        .message-content {
+            word-break: break-word;
+        }
+        
+        .impact-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .impact-title {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .response-options {
+            margin-top: 20px;
+        }
+        
+        .response-title {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: background-color var(--transition-speed);
+        }
+        
+        .option:hover {
+            background-color: #e5e5ea;
+        }
+        
+        .option.recommended {
+            border-right: 4px solid var(--success-color);
+        }
+        
+        .option.not-recommended {
+            border-right: 4px solid var(--danger-color);
+        }
+        
+        .option-label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        
+        .expert-tip {
+            background-color: rgba(106, 48, 147, 0.1);
+            border-right: 4px solid #6a3093;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px 0 0 8px;
+        }
+        
+        .expert-tip-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #6a3093;
+        }
+        
+        .resources {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .resources-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .resources-list {
+            list-style-type: none;
+        }
+        
+        .resources-list li {
+            margin-bottom: 10px;
+            padding-right: 20px;
+            position: relative;
+        }
+        
+        .resources-list li::before {
+            content: "•";
+            position: absolute;
+            right: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .resources-list a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .resources-list a:hover {
+            text-decoration: underline;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+        
+        .nav-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color var(--transition-speed);
+        }
+        
+        .nav-button:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .back-to-home {
+            background-color: #6c757d;
+        }
+        
+        .back-to-home:hover {
+            background-color: #5a6268;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .scenario-title {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>سيناريوهات الإقصاء</h1>
+                <p class="subtitle">فهم وتمييز والاستجابة للإقصاء الاجتماعي عبر الإنترنت</p>
+            </div>
+        </header>
+        
+        <div class="breadcrumbs">
+            <a href="../index.html">الرئيسية</a> &gt; <a href="../index.html#understand-section">فهم السمية عبر الإنترنت</a> &gt; سيناريوهات الإقصاء
+        </div>
+        
+        <div class="intro">
+            <h2 class="intro-title">ما هو الإقصاء عبر الإنترنت؟</h2>
+            <p>الإقصاء عبر الإنترنت هو شكل من أشكال التنمر الاجتماعي حيث يتم استبعاد شخص ما عمدًا من المجموعات أو المحادثات أو الأنشطة عبر الإنترنت. يمكن أن يشمل ذلك عدم دعوة شخص إلى مجموعات الدردشة، وتجاهل رسائله، وحظره من المجموعات، أو إنشاء مجموعات خاصة تستبعده عمدًا.</p>
+            <p>توضح السيناريوهات التالية الأشكال الشائعة للإقصاء عبر الإنترنت وتقدم إرشادات حول كيفية الاستجابة بفعالية.</p>
+        </div>
+        
+        <div class="scenario-container">
+            <div class="scenario">
+                <div class="scenario-header">
+                    <h3 class="scenario-title">السيناريو 1: الاستبعاد من مجموعة الدردشة</h3>
+                    <p class="scenario-subtitle">تطبيق المراسلة الجماعية</p>
+                </div>
+                <div class="scenario-content">
+                    <div class="scenario-description">
+                        <p>ليلى، 13 عامًا، اكتشفت أن زملاءها في الفصل أنشأوا مجموعة دردشة للتخطيط لحفلة نهاية العام الدراسي واستبعدوها عمدًا. علمت بالأمر عندما رأت صديقتها تستخدم المجموعة أثناء الغداء.</p>
+                    </div>
+                    
+                    <div class="chat-container">
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">ليلى:</span>
+                                <span class="message-time">3:45 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>مرحبًا سارة، هل يمكنك إضافتي إلى مجموعة حفلة نهاية العام؟ سمعت أنكم تخططون لها.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">سارة:</span>
+                                <span class="message-time">4:02 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>آسفة، لكن المجموعة ممتلئة الآن ولا يمكننا إضافة المزيد من الأشخاص.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">ليلى:</span>
+                                <span class="message-time">4:05 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>حقًا؟ لكنني رأيت أنك أضفت نورا بالأمس وهي انضمت للفصل بعدي.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">سارة:</span>
+                                <span class="message-time">4:20 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>حسنًا، الحقيقة هي أن بعض الأشخاص في المجموعة لا يشعرون بالراحة معك. آسفة.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="impact-section">
+                        <h4 class="impact-title">التأثير المحتمل:</h4>
+                        <p>يمكن أن يؤدي الإقصاء من المجموعات الاجتماعية إلى:</p>
+                        <ul>
+                            <li>الشعور بالرفض والوحدة</li>
+                            <li>انخفاض تقدير الذات والثقة بالنفس</li>
+                            <li>القلق الاجتماعي والخوف من التفاعل مع الآخرين</li>
+                            <li>الشعور بعدم الانتماء في المدرسة</li>
+                            <li>التأثير السلبي على الأداء الأكاديمي</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="response-options">
+                        <h4 class="response-title">خيارات الاستجابة:</h4>
+                        
+                        <div class="options-container">
+                            <div class="option recommended">
+                                <span class="option-label">موصى به: التحدث مع شخص موثوق به</span>
+                                <p>يجب على ليلى التحدث مع والديها أو معلم تثق به حول الموقف. يمكن للبالغين تقديم الدعم العاطفي والمساعدة في التعامل مع الموقف بطريقة بناءة.</p>
+                                <p>يمكنها أيضًا البحث عن صداقات جديدة وأنشطة اجتماعية بديلة حيث تشعر بالتقدير والترحيب.</p>
+                            </div>
+                            
+                            <div class="option not-recommended">
+                                <span class="option-label">غير موصى به: الاستمرار في المحاولة</span>
+                                <p>الاستمرار في طلب الانضمام إلى المجموعة قد يؤدي إلى مزيد من الرفض والإحراج. قد يستخدم المتنمرون هذه المحاولات كفرصة لمزيد من الإقصاء.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="expert-tip">
+                            <div class="expert-tip-title">نصيحة الخبير:</div>
+                            <p>تذكر أن قيمتك لا تتحدد بمن يقبلك في مجموعاتهم. ركز على بناء علاقات صحية مع أشخاص يقدرونك لمن أنت. في بعض الأحيان، يمكن أن يكون الاستبعاد من مجموعة سامة أمرًا إيجابيًا على المدى الطويل، حتى لو كان مؤلمًا في البداية.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="scenario">
+                <div class="scenario-header">
+                    <h3 class="scenario-title">السيناريو 2: تجاهل المنشورات والتعليقات</h3>
+                    <p class="scenario-subtitle">منصة التواصل الاجتماعي</p>
+                </div>
+                <div class="scenario-content">
+                    <div class="scenario-description">
+                        <p>كريم، 14 عامًا، لاحظ أن أصدقاءه بدأوا يتجاهلون منشوراته وتعليقاته على وسائل التواصل الاجتماعي. يرون منشوراته ويردون على منشورات الآخرين، لكنهم يتجاهلون محتواه عمدًا.</p>
+                    </div>
+                    
+                    <div class="chat-container">
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">كريم:</span>
+                                <span class="message-time">6:30 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>حصلت على الدرجة الكاملة في اختبار الرياضيات اليوم! 🎉</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">أحمد:</span>
+                                <span class="message-time">6:45 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>لقد كان يومًا رائعًا في المدرسة! من يريد اللعب عبر الإنترنت الليلة؟</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">محمد:</span>
+                                <span class="message-time">6:47 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>أنا متاح! سأكون متصلاً في الساعة 8.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">سارة:</span>
+                                <span class="message-time">6:50 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>أنا أيضًا! أحمد، أنت دائمًا تنظم أفضل جلسات اللعب!</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">كريم:</span>
+                                <span class="message-time">6:52 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>يمكنني الانضمام أيضًا! هل يمكنني اللعب معكم؟</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">أحمد:</span>
+                                <span class="message-time">7:05 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>حسنًا، سنبدأ في الساعة 8. سأرسل رابط الدعوة قريبًا!</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="impact-section">
+                        <h4 class="impact-title">التأثير المحتمل:</h4>
+                        <p>يمكن أن يؤدي تجاهل المنشورات والتعليقات إلى:</p>
+                        <ul>
+                            <li>الشعور بعدم الأهمية وعدم الرؤية</li>
+                            <li>انخفاض المشاركة الاجتماعية عبر الإنترنت</li>
+                            <li>القلق بشأن قيمة أفكارك ومشاركاتك</li>
+                            <li>العزلة الاجتماعية والشعور بالوحدة</li>
+                            <li>التشكيك في الصداقات والعلاقات</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="response-options">
+                        <h4 class="response-title">خيارات الاستجابة:</h4>
+                        
+                        <div class="options-container">
+                            <div class="option recommended">
+                                <span class="option-label">موصى به: التواصل المباشر والتنويع</span>
+                                <p>يمكن لكريم التواصل مع صديق مقرب بشكل خاص لمعرفة ما إذا كان هناك سوء فهم أو مشكلة يمكن حلها.</p>
+                                <p>من المفيد أيضًا توسيع دائرة الأصدقاء والاهتمامات، والانضمام إلى مجموعات جديدة تشارك اهتماماته.</p>
+                            </div>
+                            
+                            <div class="option not-recommended">
+                                <span class="option-label">غير موصى به: المواجهة العامة</span>
+                                <p>نشر تعليقات غاضبة أو محرجة علنًا حول التجاهل قد يؤدي إلى تفاقم الموقف ويمكن أن يؤدي إلى مزيد من الإقصاء.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="expert-tip">
+                            <div class="expert-tip-title">نصيحة الخبير:</div>
+                            <p>قد لا يكون التجاهل عبر الإنترنت متعمدًا دائمًا. في بعض الأحيان، تؤدي خوارزميات وسائل التواصل الاجتماعي إلى عدم ظهور بعض المنشورات في خلاصات الأصدقاء. قبل افتراض الأسوأ، فكر في التواصل بطرق مختلفة. إذا استمر النمط، فقد يكون الوقت قد حان للبحث عن مجتمعات أكثر تقديرًا لمشاركتك.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="resources">
+            <h3 class="resources-title">موارد إضافية</h3>
+            <ul class="resources-list">
+                <li><a href="#">بناء المرونة الاجتماعية</a> - نصائح للتعامل مع الإقصاء والرفض</li>
+                <li><a href="#">مهارات الصداقة الصحية</a> - دليل لبناء علاقات إيجابية</li>
+                <li><a href="#">خط المساعدة للشباب</a> - دعم للشباب الذين يواجهون مشاكل اجتماعية</li>
+                <li><a href="#">التعامل مع الشعور بالوحدة</a> - استراتيجيات للتغلب على العزلة الاجتماعية</li>
+            </ul>
+        </div>
+        
+        <div class="navigation-buttons">
+            <a href="scenario_harassment.html" class="nav-button back-to-home">&larr; السابق: التحرش</a>
+            <a href="scenario_impersonation.html" class="nav-button">التالي: انتحال الشخصية &rarr;</a>
+        </div>
+    </div>
+</body>
+</html>

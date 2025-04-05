@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سيناريوهات المعلومات المضللة - تعليم السمية عبر الإنترنت</title>
+    <style>
+        :root {
+            --primary-color: #4e54c8;
+            --secondary-color: #8f94fb;
+            --accent-color: #ff6b6b;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --text-color: #333;
+            --light-bg: #f9f9f9;
+            --card-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            --transition-speed: 0.3s;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 10px;
+        }
+        
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .breadcrumbs {
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .breadcrumbs a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+        }
+        
+        .intro {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .intro-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .scenario-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .scenario {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .scenario-header {
+            background-color: #11998e;
+            color: white;
+            padding: 15px 20px;
+        }
+        
+        .scenario-title {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+        
+        .scenario-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .scenario-content {
+            padding: 20px;
+        }
+        
+        .scenario-description {
+            margin-bottom: 20px;
+        }
+        
+        .chat-container {
+            background-color: #f5f5f5;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .message-bubble {
+            max-width: 80%;
+            margin-bottom: 15px;
+            padding: 12px 15px;
+            border-radius: 18px;
+            position: relative;
+            font-size: 0.95rem;
+        }
+        
+        .received {
+            background-color: #e5e5ea;
+            align-self: flex-start;
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .sent {
+            background-color: #dcf8c6;
+            align-self: flex-end;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+            text-align: right;
+        }
+        
+        .message-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .message-sender {
+            font-weight: bold;
+            margin-left: 8px;
+        }
+        
+        .message-time {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        
+        .message-content {
+            word-break: break-word;
+        }
+        
+        .impact-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .impact-title {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .response-options {
+            margin-top: 20px;
+        }
+        
+        .response-title {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: background-color var(--transition-speed);
+        }
+        
+        .option:hover {
+            background-color: #e5e5ea;
+        }
+        
+        .option.recommended {
+            border-right: 4px solid var(--success-color);
+        }
+        
+        .option.not-recommended {
+            border-right: 4px solid var(--danger-color);
+        }
+        
+        .option-label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        
+        .expert-tip {
+            background-color: rgba(17, 153, 142, 0.1);
+            border-right: 4px solid #11998e;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px 0 0 8px;
+        }
+        
+        .expert-tip-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #11998e;
+        }
+        
+        .resources {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .resources-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .resources-list {
+            list-style-type: none;
+        }
+        
+        .resources-list li {
+            margin-bottom: 10px;
+            padding-right: 20px;
+            position: relative;
+        }
+        
+        .resources-list li::before {
+            content: "•";
+            position: absolute;
+            right: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .resources-list a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .resources-list a:hover {
+            text-decoration: underline;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+        
+        .nav-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color var(--transition-speed);
+        }
+        
+        .nav-button:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .back-to-home {
+            background-color: #6c757d;
+        }
+        
+        .back-to-home:hover {
+            background-color: #5a6268;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .scenario-title {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>سيناريوهات المعلومات المضللة</h1>
+                <p class="subtitle">فهم وتمييز والاستجابة للمعلومات المضللة عبر الإنترنت</p>
+            </div>
+        </header>
+        
+        <div class="breadcrumbs">
+            <a href="../index.html">الرئيسية</a> &gt; <a href="../index.html#understand-section">فهم السمية عبر الإنترنت</a> &gt; سيناريوهات المعلومات المضللة
+        </div>
+        
+        <div class="intro">
+            <h2 class="intro-title">ما هي المعلومات المضللة عبر الإنترنت؟</h2>
+            <p>المعلومات المضللة هي معلومات خاطئة أو مضللة يتم نشرها عبر الإنترنت، سواء عن قصد أو عن غير قصد. تشمل الأخبار الكاذبة، والشائعات، ونظريات المؤامرة، والمحتوى المزيف، والمعلومات المضللة المتعمدة التي تهدف إلى التلاعب بالرأي العام أو إلحاق الضرر بالأفراد أو المجموعات.</p>
+            <p>توضح السيناريوهات التالية الأشكال الشائعة للمعلومات المضللة عبر الإنترنت وتقدم إرشادات حول كيفية التعرف عليها والاستجابة لها بفعالية.</p>
+        </div>
+        
+        <div class="scenario-container">
+            <div class="scenario">
+                <div class="scenario-header">
+                    <h3 class="scenario-title">السيناريو 1: مشاركة معلومات صحية خاطئة</h3>
+                    <p class="scenario-subtitle">مجموعة على وسائل التواصل الاجتماعي</p>
+                </div>
+                <div class="scenario-content">
+                    <div class="scenario-description">
+                        <p>يشارك أحمد، 16 عامًا، في مجموعة دراسية عبر الإنترنت. بدأ أحد أعضاء المجموعة في مشاركة منشورات تدعي أن شرب الماء مع عصير الليمون يمكن أن يعالج فيروس كورونا، ويشجع الطلاب على تجنب اللقاحات.</p>
+                    </div>
+                    
+                    <div class="chat-container">
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">محمد:</span>
+                                <span class="message-time">5:15 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>مرحبًا بالجميع! وجدت هذه المعلومات المهمة التي يخفيها الأطباء عنا. شرب الماء الدافئ مع عصير الليمون 3 مرات يوميًا يمكن أن يعالج فيروس كورونا! انشروها لإنقاذ الأرواح! 🍋💧</p>
+                                <p>أيضًا، اللقاحات خطيرة وتحتوي على مواد سامة. تجنبوها بأي ثمن!</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">سارة:</span>
+                                <span class="message-time">5:20 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>حقًا؟ سأخبر عائلتي بذلك! شكرًا للمشاركة!</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">أحمد:</span>
+                                <span class="message-time">5:25 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>انتظروا، هذه المعلومات غير صحيحة. لا يوجد دليل علمي على أن الليمون يعالج فيروس كورونا. منظمة الصحة العالمية تؤكد أن اللقاحات آمنة وفعالة. يجب أن نعتمد على المصادر الموثوقة للمعلومات الصحية.</p>
+                                <p>هنا رابط لموقع منظمة الصحة العالمية: [رابط]</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">محمد:</span>
+                                <span class="message-time">5:30 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>لا تصدق كل ما تقرأه من المصادر "الرسمية"! لدي عم استخدم هذه الطريقة وشفي تمامًا! المؤسسات الطبية تخفي الحقيقة لأنها تريد بيع المزيد من الأدوية!</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="impact-section">
+                        <h4 class="impact-title">التأثير المحتمل:</h4>
+                        <p>يمكن أن تؤدي المعلومات الصحية المضللة إلى:</p>
+                        <ul>
+                            <li>اتخاذ قرارات صحية خطيرة</li>
+                            <li>تجنب العلاجات الطبية الفعالة</li>
+                            <li>انتشار الأمراض المعدية</li>
+                            <li>القلق والخوف غير المبرر</li>
+                            <li>تقويض الثقة في المؤسسات الصحية</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="response-options">
+                        <h4 class="response-title">خيارات الاستجابة:</h4>
+                        
+                        <div class="options-container">
+                            <div class="option recommended">
+                                <span class="option-label">موصى به: مشاركة معلومات دقيقة من مصادر موثوقة</span>
+                                <p>يجب على أحمد الاستمرار في مشاركة معلومات دقيقة من مصادر موثوقة مثل منظمة الصحة العالمية أو وزارة الصحة.</p>
+                                <p>من المهم تقديم روابط مباشرة للمصادر الموثوقة حتى يتمكن الآخرون من التحقق من المعلومات بأنفسهم.</p>
+                                <p>يمكن أيضًا الإبلاغ عن المنشورات التي تحتوي على معلومات صحية مضللة إلى إدارة المجموعة أو المنصة.</p>
+                            </div>
+                            
+                            <div class="option not-recommended">
+                                <span class="option-label">غير موصى به: تجاهل المعلومات المضللة</span>
+                                <p>تجاهل المعلومات المضللة قد يسمح لها بالانتشار دون تحدي، مما قد يؤدي إلى تبني المزيد من الأشخاص لهذه المعلومات الخاطئة.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="expert-tip">
+                            <div class="expert-tip-title">نصيحة الخبير:</div>
+                            <p>عند مواجهة المعلومات المضللة، استخدم نهج "استفسر، لا تتهم". بدلاً من اتهام الشخص بنشر معلومات كاذبة، اسأل عن مصدر المعلومات وشجع على التفكير النقدي. على سبيل المثال: "هذه معلومات مثيرة للاهتمام. هل يمكنك مشاركة المصدر العلمي الذي وجدت فيه هذه المعلومات؟"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="scenario">
+                <div class="scenario-header">
+                    <h3 class="scenario-title">السيناريو 2: صور مزيفة على وسائل التواصل الاجتماعي</h3>
+                    <p class="scenario-subtitle">منصة مشاركة الصور</p>
+                </div>
+                <div class="scenario-content">
+                    <div class="scenario-description">
+                        <p>نورة، 14 عامًا، تلاحظ أن العديد من أصدقائها يشاركون صورة تظهر حيوانًا غريبًا يُزعم أنه اكتُشف حديثًا في المحيط. الصورة تحظى بآلاف المشاركات والتعليقات، لكن نورة تشك في أنها قد تكون مزيفة.</p>
+                    </div>
+                    
+                    <div class="chat-container">
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">ليلى:</span>
+                                <span class="message-time">7:15 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>هل رأيتم هذا المخلوق المذهل الذي اكتشفه العلماء في أعماق المحيط الهادئ الأسبوع الماضي؟ يقولون إنه نوع جديد تمامًا! 😮 [صورة لمخلوق بحري غريب]</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">كريم:</span>
+                                <span class="message-time">7:20 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>واو! هذا مذهل! العالم مليء بالعجائب!</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">نورة:</span>
+                                <span class="message-time">7:25 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>أعتقد أن هذه الصورة مزيفة. قمت بالبحث عنها باستخدام البحث العكسي للصور، ووجدت أنها في الواقع صورة معدلة رقميًا أنشأها فنان قبل عامين. هنا المصدر الأصلي: [رابط]</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">ليلى:</span>
+                                <span class="message-time">7:30 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>حقًا؟ لم أكن أعرف ذلك! شكرًا للتوضيح. سأحذف منشوري حتى لا أنشر معلومات خاطئة.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="impact-section">
+                        <h4 class="impact-title">التأثير المحتمل:</h4>
+                        <p>يمكن أن تؤدي الصور المزيفة والمعدلة إلى:</p>
+                        <ul>
+                            <li>نشر معلومات خاطئة على نطاق واسع</li>
+                            <li>تضليل الجمهور حول الاكتشافات العلمية</li>
+                            <li>تقويض الثقة في المعلومات الحقيقية</li>
+                            <li>إثارة الخوف أو القلق غير المبرر</li>
+                            <li>تشويه فهم الناس للعالم من حولهم</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="response-options">
+                        <h4 class="response-title">خيارات الاستجابة:</h4>
+                        
+                        <div class="options-container">
+                            <div class="option recommended">
+                                <span class="option-label">موصى به: التحقق والمشاركة بمسؤولية</span>
+                                <p>أحسنت نورة باستخدام البحث العكسي للصور للتحقق من أصل الصورة قبل تصديقها.</p>
+                                <p>مشاركة نتائج التحقق بطريقة محترمة ومفيدة يساعد الآخرين على تعلم كيفية التحقق من المعلومات.</p>
+                                <p>تشجيع الأصدقاء على التحقق من المعلومات قبل مشاركتها يساعد في منع انتشار المعلومات المضللة.</p>
+                            </div>
+                            
+                            <div class="option not-recommended">
+                                <span class="option-label">غير موصى به: المشاركة دون تحقق</span>
+                                <p>مشاركة الصور أو المعلومات المثيرة دون التحقق من صحتها يساهم في انتشار المعلومات المضللة ويمكن أن يضر بمصداقيتك.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="expert-tip">
+                            <div class="expert-tip-title">نصيحة الخبير:</div>
+                            <p>تعلم استخدام أدوات التحقق من المعلومات مثل البحث العكسي للصور (يمكنك استخدام Google Images أو TinEye)، والتحقق من التاريخ والمصدر الأصلي للمعلومات. كلما كانت المعلومات أكثر إثارة للدهشة، كلما كان من المهم التحقق منها قبل مشاركتها.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="resources">
+            <h3 class="resources-title">موارد إضافية</h3>
+            <ul class="resources-list">
+                <li><a href="#">دليل التحقق من المعلومات</a> - أدوات وتقنيات للتحقق من صحة المعلومات عبر الإنترنت</li>
+                <li><a href="#">مصادر موثوقة للمعلومات الصحية</a> - قائمة بالمواقع الرسمية والموثوقة للمعلومات الصحية</li>
+                <li><a href="#">كيفية استخدام البحث العكسي للصور</a> - دليل خطوة بخطوة للتحقق من أصل الصور</li>
+                <li><a href="#">التفكير النقدي عبر الإنترنت</a> - مهارات لتقييم المعلومات بشكل نقدي</li>
+            </ul>
+        </div>
+        
+        <div class="navigation-buttons">
+            <a href="scenario_impersonation.html" class="nav-button back-to-home">&larr; السابق: انتحال الشخصية</a>
+            <a href="scenario_privacy_violations.html" class="nav-button">التالي: انتهاكات الخصوصية &rarr;</a>
+        </div>
+    </div>
+</body>
+</html>

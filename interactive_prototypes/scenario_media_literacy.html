@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سيناريو: محو الأمية الإعلامية</title>
+    <style>
+        :root {
+            --primary-color: #4e54c8;
+            --secondary-color: #8f94fb;
+            --accent-color: #ff6b6b;
+            --text-color: #333;
+            --light-bg: #f9f9f9;
+            --card-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            --transition-speed: 0.3s;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            color: var(--text-color);
+            font-size: 1.2rem;
+        }
+        
+        .scenario-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .scenario-title {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+        }
+        
+        .scenario-description {
+            margin-bottom: 20px;
+        }
+        
+        .chat-container {
+            background-color: var(--light-bg);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+        
+        .chat-message {
+            margin-bottom: 15px;
+            display: flex;
+        }
+        
+        .chat-message.received {
+            justify-content: flex-start;
+        }
+        
+        .chat-message.sent {
+            justify-content: flex-end;
+        }
+        
+        .chat-bubble {
+            padding: 10px 15px;
+            border-radius: 18px;
+            max-width: 80%;
+        }
+        
+        .chat-message.received .chat-bubble {
+            background-color: #e5e5ea;
+        }
+        
+        .chat-message.sent .chat-bubble {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            margin: 30px 0 15px;
+            font-size: 1.5rem;
+        }
+        
+        .response-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .response-card {
+            flex: 1;
+            min-width: 300px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+            padding: 20px;
+            border-right: 4px solid;
+        }
+        
+        .response-card.recommended {
+            border-color: #28a745;
+        }
+        
+        .response-card.not-recommended {
+            border-color: #dc3545;
+        }
+        
+        .response-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .response-icon {
+            margin-left: 10px;
+            font-size: 1.4rem;
+        }
+        
+        .response-content {
+            margin-bottom: 15px;
+        }
+        
+        .consequence-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        
+        .tips-container {
+            background-color: var(--light-bg);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .tips-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .tips-list {
+            list-style-position: inside;
+            padding-right: 15px;
+        }
+        
+        .tips-list li {
+            margin-bottom: 10px;
+        }
+        
+        .resources-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .resources-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .resources-list {
+            list-style-type: none;
+        }
+        
+        .resource-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .resource-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .resource-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .resource-description {
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .resource-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .resource-link:hover {
+            text-decoration: underline;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .nav-button {
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color var(--transition-speed);
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .nav-button:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        @media (max-width: 768px) {
+            .response-container {
+                flex-direction: column;
+            }
+            
+            .response-card {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>محو الأمية الإعلامية</h1>
+            <p class="subtitle">تطوير مهارات التفكير النقدي للأخبار والمعلومات في المنطقة العربية</p>
+        </header>
+        
+        <div class="scenario-container">
+            <h2 class="scenario-title">فهم محو الأمية الإعلامية في السياق الخليجي</h2>
+            <p class="scenario-description">
+                مع تزايد انتشار وسائل التواصل الاجتماعي والمنصات الإخبارية المختلفة، أصبح من الضروري للشباب في دول الخليج تطوير مهارات محو الأمية الإعلامية للتمييز بين المعلومات الصحيحة والمضللة. في المنطقة العربية، هناك تحديات خاصة تتعلق بالأخبار المتعلقة بالقضايا السياسية والدينية والاجتماعية، حيث قد تنتشر المعلومات المضللة بسرعة عبر تطبيقات المراسلة مثل واتساب وتلغرام. تعلم كيفية تقييم مصداقية المصادر والتحقق من المعلومات هو مهارة أساسية للمواطنة الرقمية المسؤولة.
+            </p>
+            
+            <h3 class="section-title">تحديات محو الأمية الإعلامية في المنطقة العربية:</h3>
+            <ul>
+                <li>انتشار سريع للمعلومات عبر تطبيقات المراسلة الشائعة في المنطقة</li>
+                <li>تداخل الأخبار مع الآراء الشخصية والتحيزات</li>
+                <li>استخدام العاطفة والدين في نشر معلومات غير دقيقة</li>
+                <li>صعوبة التحقق من مصادر الأخبار الأجنبية المترجمة</li>
+                <li>تأثير الخلافات السياسية الإقليمية على تغطية الأخبار</li>
+                <li>محدودية بعض مصادر التحقق من المعلومات باللغة العربية</li>
+            </ul>
+        </div>
+        
+        <div class="scenario-container">
+            <h2 class="scenario-title">سيناريو: انتشار خبر مضلل عبر واتساب</h2>
+            <p class="scenario-description">
+                محمد (14 عامًا) من قطر، تلقى رسالة على مجموعة عائلية في واتساب تحذر من تطبيق جديد يزعم أنه يسرق بيانات المستخدمين ويتجسس على المحادثات الخاصة. الرسالة تطلب مشاركتها مع أكبر عدد ممكن من الأشخاص "لحمايتهم". لاحظ محمد أن العديد من أفراد العائلة بدأوا في مشاركة الرسالة على نطاق واسع دون التحقق من صحتها.
+            </p>
+            
+            <div class="chat-container">
+                <div class="chat-message received">
+                    <div class="chat-bubble">
+                        ⚠️ تحذير عاجل ⚠️
+                        
+                        لا تقم بتحميل تطبيق "سوشال كونكت" الجديد! هذا التطبيق تم إنشاؤه من قبل قراصنة ويسرق جميع بياناتك الشخصية ويتجسس على محادثاتك. قام بالفعل باختراق هواتف الآلاف في الخليج!
+                        
+                        قم بمشاركة هذه الرسالة مع جميع أصدقائك وعائلتك لحمايتهم. هذا الخبر أكدته مصادر أمنية موثوقة.
+                        
+                        انشر فورًا! ⚠️⚠️⚠️
+                    </div>
+                </div>
+                <div class="chat-message received">
+                    <div class="chat-bubble">
+                        يا جماعة، هذا خطير جدًا! قمت بمشاركته مع كل مجموعاتي. لا تنسوا تحذير الجميع!
+                    </div>
+                </div>
+                <div class="chat-message received">
+                    <div class="chat-bubble">
+                        شكرًا على التحذير. سأخبر كل من أعرف. الله يحمينا من هؤلاء المخترقين.
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="section-title">كيف يمكن لمحمد أن يستجيب؟</h3>
+            
+            <div class="response-container">
+                <div class="response-card recommended">
+                    <div class="response-title">
+                        <span class="response-icon">✅</span>
+                        <span>استجابة موصى بها</span>
+                    </div>
+                    <div class="response-content">
+                        <p>
+                            <strong>التحقق من المعلومات قبل المشاركة:</strong> يمكن لمحمد أن يكتب: "قبل أن نشارك هذه الرسالة، دعونا نتحقق من صحتها. لم أجد أي معلومات عن هذا التطبيق في مواقع الأمن السيبراني الموثوقة أو في أخبار وزارة الاتصالات. كما أن الرسالة لا تذكر مصادر محددة للتحقق منها. غالبًا ما تنتشر رسائل مماثلة دون أساس حقيقي. يمكننا التحقق من خلال موقع مركز الأمن السيبراني القطري (Q-CERT) أو موقع تأكد للتحقق من الشائعات." يمكنه أيضًا البحث عن معلومات حول التطبيق المذكور في مصادر موثوقة ومشاركة ما يجده مع المجموعة.
+                        </p>
+                        <div class="consequence">
+                            <div class="consequence-title">النتيجة:</div>
+                            <p>
+                                بهذه الطريقة، يشجع محمد على التفكير النقدي والتحقق من المعلومات قبل نشرها. هذا النهج يساعد في كسر سلسلة انتشار المعلومات المضللة ويعلم أفراد العائلة أهمية التحقق من المصادر. كما أنه يقدم بدائل عملية للتحقق من المعلومات من خلال الإشارة إلى مصادر موثوقة. هذا السلوك المسؤول يعزز ثقافة محو الأمية الإعلامية في محيطه الاجتماعي.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="response-card not-recommended">
+                    <div class="response-title">
+                        <span class="response-icon">❌</span>
+                        <span>استجابة غير موصى بها</span>
+                    </div>
+                    <div class="response-content">
+                        <p>
+                            <strong>المشاركة الفورية أو التجاهل التام:</strong> قد يختار محمد مشاركة الرسالة فورًا: "شكرًا على التحذير! سأرسلها لكل أصدقائي الآن. من الأفضل أن نكون حذرين!" أو قد يتجاهل الرسالة تمامًا دون أي تعليق، معتقدًا أنها ليست مسؤوليته التصحيح.
+                        </p>
+                        <div class="consequence">
+                            <div class="consequence-title">النتيجة:</div>
+                            <p>
+                                مشاركة الرسالة دون التحقق تساهم في انتشار المعلومات المضللة وتعزز ثقافة نشر الشائعات. هذا قد يؤدي إلى قلق غير ضروري بين الناس أو قد يؤثر سلبًا على سمعة تطبيقات شرعية. من ناحية أخرى، تجاهل الرسالة تمامًا يفوت فرصة لتثقيف الآخرين حول أهمية التحقق من المعلومات. في عصر المعلومات، المشاركة الإيجابية في تصحيح المعلومات المضللة هي مسؤولية مشتركة.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="scenario-container">
+            <h2 class="scenario-title">سيناريو: التعامل مع تقارير إخبارية متناقضة</h2>
+            <p class="scenario-description">
+                لينا (16 عامًا) من الإمارات، تعمل على مشروع مدرسي حول التغير المناخي وتأثيره على دول الخليج. أثناء بحثها، وجدت تقارير إخبارية متناقضة: بعضها يؤكد خطورة التغير المناخي على المنطقة، وبعضها الآخر يقلل من شأنه ويصفه بأنه "مبالغ فيه". لاحظت أن كلا الجانبين يستخدم إحصاءات وخبراء لدعم وجهة نظره.
+            </p>
+            
+            <div class="chat-container">
+                <div class="chat-message received">
+                    <div class="chat-bubble">
+                        دراسة جديدة: التغير المناخي سيؤدي إلى ارتفاع درجات الحرارة في الخليج بمعدل 4 درجات بحلول 2050، مما سيجعل أجزاء من المنطقة غير صالحة للسكن.
+                    </div>
+                </div>
+                <div class="chat-message received">
+                    <div class="chat-bubble">
+                        خبراء: مخاوف التغير المناخي مبالغ فيها. الإمارات ودول الخليج لديها تكنولوجيا متطورة للتكيف مع التغيرات المناخية. لا داعي للقلق.
+                    </div>
+                </div>
+                <div class="chat-message received">
+                    <div class="chat-bubble">
+                        تقرير: دول الخليج ستواجه نقصًا حادًا في المياه بسبب التغير المناخي خلال العقود القادمة.
+                    </div>
+                </div>
+                <div class="chat-message received">
+                    <div class="chat-bubble">
+                        علماء: التقلبات المناخية الحالية هي جزء من دورة طبيعية وليست بسبب الأنشطة البشرية.
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="section-title">كيف يمكن للينا أن تستجيب؟</h3>
+            
+            <div class="response-container">
+                <div class="response-card recommended">
+                    <div class="response-title">
+                        <span class="response-icon">✅</span>
+                        <span>استجابة موصى بها</span>
+                    </div>
+                    <div class="response-content">
+                        <p>
+                            <strong>تقييم المصادر والبحث عن الإجماع العلمي:</strong> يمكن للينا أن تتبع نهجًا منهجيًا في بحثها: (1) التحقق من مصداقية كل مصدر: من نشر التقرير؟ هل هو مصدر إخباري معروف أم موقع غير معروف؟ (2) فحص خلفية "الخبراء" المذكورين: هل هم علماء مناخ معترف بهم أم أشخاص من مجالات أخرى؟ (3) البحث عن الإجماع العلمي: ماذا تقول الهيئات العلمية المعترف بها مثل الهيئة الحكومية الدولية المعنية بتغير المناخ (IPCC)؟ (4) التحقق من الدراسات المنشورة في مجلات علمية محكمة. (5) الاطلاع على موقف المؤسسات الرسمية في دولة الإمارات مثل وزارة التغير المناخي والبيئة. يمكنها تضمين وجهات النظر المختلفة في مشروعها مع تحليل نقدي لمصداقية كل منها.
+                        </p>
+                        <div class="consequence">
+                            <div class="consequence-title">النتيجة:</div>
+                            <p>
+                                باتباع هذا النهج المنهجي، تطور لينا مهارات التفكير النقدي وتتعلم كيفية التمييز بين المصادر الموثوقة وغير الموثوقة. مشروعها سيكون أكثر توازنًا وعمقًا، ويعكس فهمًا حقيقيًا للقضية بدلاً من مجرد تكرار الآراء. هذه المهارات ستفيدها في دراستها الأكاديمية وفي حياتها كمواطنة رقمية مسؤولة. كما أنها ستتعلم أن القضايا العلمية المعقدة مثل تغير المناخ تتطلب الرجوع إلى الإجماع العلمي وليس فقط إلى تقارير إخبارية متفرقة.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="response-card not-recommended">
+                    <div class="response-title">
+                        <span class="response-icon">❌</span>
+                        <span>استجابة غير موصى بها</span>
+                    </div>
+                    <div class="response-content">
+                        <p>
+                            <strong>الاعتماد على مصدر واحد أو تجنب الموضوع:</strong> قد تختار لينا الاعتماد فقط على المصادر التي تتفق مع رأيها الشخصي المسبق، أو قد تقرر تغيير موضوع مشروعها تمامًا لتجنب التعامل مع المعلومات المتناقضة.
+                        </p>
+                        <div class="consequence">
+                            <div class="consequence-title">النتيجة:</div>
+                            <p>
+                                الاعتماد على مصادر تتفق فقط مع وجهة نظر واحدة يؤدي إلى مشروع متحيز وغير متوازن، ولا يعكس تعقيد القضية. هذا النهج لا يطور مهارات التفكير النقدي ويعزز غرفة الصدى (echo chamber) حيث نسمع فقط ما نتفق معه. من ناحية أخرى، تجنب الموضوع بسبب تعقيده يفوت فرصة قيمة للتعلم وتطوير مهارات البحث. في عالم مليء بالمعلومات المتناقضة، من المهم تعلم كيفية التنقل بينها بدلاً من تجنبها.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tips-container">
+            <h3 class="tips-title">نصائح لتطوير مهارات محو الأمية الإعلامية:</h3>
+            <ul class="tips-list">
+                <li><strong>تحقق من المصدر:</strong> من نشر هذه المعلومات؟ هل هو مصدر معروف بالمصداقية؟</li>
+                <li><strong>ابحث عن التأكيد من مصادر متعددة:</strong> هل تؤكد مصادر أخرى موثوقة نفس المعلومات؟</li>
+                <li><strong>انتبه للتاريخ:</strong> متى نُشرت المعلومات؟ هل هي حديثة أم قديمة؟</li>
+                <li><strong>تحقق من الخبراء:</strong> ما هي خبرة الأشخاص المذكورين؟ هل هم متخصصون في المجال؟</li>
+                <li><strong>ميز بين الحقائق والآراء:</strong> هل المحتوى يقدم حقائق قابلة للتحقق أم آراء شخصية؟</li>
+                <li><strong>انتبه للعاطفة:</strong> هل المحتوى يحاول إثارة مشاعر قوية؟ هذه قد تكون علامة على التلاعب.</li>
+                <li><strong>استخدم أدوات التحقق:</strong> استفد من المواقع المتخصصة في التحقق من الشائعات والأخبار الكاذبة.</li>
+                <li><strong>فكر قبل المشاركة:</strong> تأكد من صحة المعلومات قبل مشاركتها مع الآخرين.</li>
+            </ul>
+        </div>
+        
+        <div class="resources-container">
+            <h3 class="resources-title">موارد للتحقق من المعلومات في قطر والمنطقة العربية:</h3>
+            <ul class="resources-list">
+                <li class="resource-item">
+                    <div class="resource-name">مركز مكافحة الشائعات - قطر</div>
+                    <div class="resource-description">منصة رسمية للتحقق من الشائعات المنتشرة في قطر.</div>
+                    <a href="https://www.gov.qa/wps/portal/rumor" class="resource-link" target="_blank">زيارة الموقع</a>
+                </li>
+                <li class="resource-item">
+                    <div class="resource-name">تأكد - منصة التحقق من الأخبار</div>
+                    <div class="resource-description">منصة عربية متخصصة في التحقق من الأخبار والمعلومات المتداولة.</div>
+                    <a href="https://www.taakadae.com" class="resource-link" target="_blank">زيارة الموقع</a>
+                </li>
+                <li class="resource-item">
+                    <div class="resource-name">مركز الأمن السيبراني القطري (Q-CERT)</div>
+                    <div class="resource-description">يقدم معلومات حول التهديدات السيبرانية والشائعات التقنية.</div>
+                    <a href="https://www.qcert.org/ar" class="resource-link" target="_blank">زيارة الموقع</a>
+                </li>
+                <li class="resource-item">
+                    <div class="resource-name">شبكة الصحافة الأخلاقية - العربية</div>
+                    <div class="resource-description">توفر موارد لتعزيز الصحافة الأخلاقية ومحو الأمية الإعلامية.</div>
+                    <a href="https://ethicaljournalismnetwork.org/ar" class="resource-link" target="_blank">زيارة الموقع</a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="navigation">
+            <a href="../index.html" class="nav-button">الرئيسية</a>
+            <a href="scenario_ramadan_social_media.html" class="nav-button">السيناريو التالي: وسائل التواصل الاجتماعي خلال رمضان</a>
+        </div>
+    </div>
+</body>
+</html>

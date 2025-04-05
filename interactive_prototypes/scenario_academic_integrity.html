@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سيناريو: النزاهة الأكاديمية</title>
+    <style>
+        :root {
+            --primary-color: #4e54c8;
+            --secondary-color: #8f94fb;
+            --accent-color: #ff6b6b;
+            --text-color: #333;
+            --light-bg: #f9f9f9;
+            --card-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            --transition-speed: 0.3s;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            color: var(--text-color);
+            font-size: 1.2rem;
+        }
+        
+        .scenario-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .scenario-title {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+        }
+        
+        .scenario-description {
+            margin-bottom: 20px;
+        }
+        
+        .chat-container {
+            background-color: var(--light-bg);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+        
+        .chat-message {
+            margin-bottom: 15px;
+            display: flex;
+        }
+        
+        .chat-message.received {
+            justify-content: flex-start;
+        }
+        
+        .chat-message.sent {
+            justify-content: flex-end;
+        }
+        
+        .chat-bubble {
+            padding: 10px 15px;
+            border-radius: 18px;
+            max-width: 80%;
+        }
+        
+        .chat-message.received .chat-bubble {
+            background-color: #e5e5ea;
+        }
+        
+        .chat-message.sent .chat-bubble {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            margin: 30px 0 15px;
+            font-size: 1.5rem;
+        }
+        
+        .response-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .response-card {
+            flex: 1;
+            min-width: 300px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+            padding: 20px;
+            border-right: 4px solid;
+        }
+        
+        .response-card.recommended {
+            border-color: #28a745;
+        }
+        
+        .response-card.not-recommended {
+            border-color: #dc3545;
+        }
+        
+        .response-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .response-icon {
+            margin-left: 10px;
+            font-size: 1.4rem;
+        }
+        
+        .response-content {
+            margin-bottom: 15px;
+        }
+        
+        .consequence-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        
+        .tips-container {
+            background-color: var(--light-bg);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .tips-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .tips-list {
+            list-style-position: inside;
+            padding-right: 15px;
+        }
+        
+        .tips-list li {
+            margin-bottom: 10px;
+        }
+        
+        .resources-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .resources-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .resources-list {
+            list-style-type: none;
+        }
+        
+        .resource-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .resource-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .resource-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .resource-description {
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .resource-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .resource-link:hover {
+            text-decoration: underline;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .nav-button {
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color var(--transition-speed);
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .nav-button:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        @media (max-width: 768px) {
+            .response-container {
+                flex-direction: column;
+            }
+            
+            .response-card {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>النزاهة الأكاديمية</h1>
+            <p class="subtitle">التعامل مع تحديات النزاهة الأكاديمية في العصر الرقمي</p>
+        </header>
+        
+        <div class="scenario-container">
+            <h2 class="scenario-title">فهم النزاهة الأكاديمية في العصر الرقمي</h2>
+            <p class="scenario-description">
+                تعد النزاهة الأكاديمية قيمة أساسية في المؤسسات التعليمية في قطر ودول الخليج. مع توفر المعلومات بسهولة عبر الإنترنت وانتشار الأدوات الرقمية، أصبح الطلاب يواجهون تحديات جديدة في الحفاظ على النزاهة الأكاديمية. يشمل ذلك تحديات مثل الانتحال الأدبي (السرقة العلمية)، والغش الإلكتروني، واستخدام الذكاء الاصطناعي في كتابة الواجبات، وشراء الأبحاث الجاهزة عبر الإنترنت.
+            </p>
+            
+            <h3 class="section-title">تحديات النزاهة الأكاديمية الشائعة:</h3>
+            <ul>
+                <li>نسخ ولصق المحتوى من الإنترنت دون الإشارة إلى المصدر</li>
+                <li>استخدام أدوات الذكاء الاصطناعي لكتابة الواجبات والأبحاث</li>
+                <li>مشاركة الإجابات في مجموعات الدراسة عبر الإنترنت خلال الاختبارات</li>
+                <li>شراء الأبحاث والواجبات الجاهزة من مواقع متخصصة</li>
+                <li>تزوير البيانات أو النتائج في المشاريع البحثية</li>
+                <li>السماح للآخرين بإكمال الواجبات الفردية</li>
+            </ul>
+        </div>
+        
+        <div class="scenario-container">
+            <h2 class="scenario-title">سيناريو: ضغط الأقران لمشاركة الإجابات</h2>
+            <p class="scenario-description">
+                خالد طالب في السنة الأولى بالجامعة، يدرس الهندسة في إحدى الجامعات المرموقة في قطر. خلال فترة الاختبارات النهائية، أنشأ بعض زملائه مجموعة واتساب لمشاركة الإجابات أثناء الاختبار عبر الإنترنت. أضافوا خالد إلى المجموعة وطلبوا منه المشاركة في تبادل الإجابات.
+            </p>
+            
+            <div class="chat-container">
+                <div class="chat-message received">
+                    <div class="chat-bubble">
+                        مرحبًا خالد، أضفناك إلى مجموعة "مساعدة اختبار الفيزياء". سنشارك الإجابات غدًا خلال الاختبار. كل شخص سيحل بعض الأسئلة ويشاركها مع المجموعة.
+                    </div>
+                </div>
+                <div class="chat-message received">
+                    <div class="chat-bubble">
+                        الاختبار صعب جدًا والدكتور قاسٍ في التصحيح. الجميع يفعل ذلك، لا تقلق.
+                    </div>
+                </div>
+                <div class="chat-message received">
+                    <div class="chat-bubble">
+                        نحتاج مساعدتك خاصة في أسئلة الميكانيكا، أنت متفوق فيها. نحن نساعد بعضنا البعض فقط.
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="section-title">كيف يمكن لخالد أن يستجيب؟</h3>
+            
+            <div class="response-container">
+                <div class="response-card recommended">
+                    <div class="response-title">
+                        <span class="response-icon">✅</span>
+                        <span>استجابة موصى بها</span>
+                    </div>
+                    <div class="response-content">
+                        <p>
+                            <strong>الرفض بأدب والالتزام بالنزاهة الأكاديمية:</strong> يمكن لخالد أن يرفض المشاركة بطريقة محترمة ومباشرة. مثلاً: "شكرًا على دعوتي للمجموعة، لكنني أفضل عدم المشاركة في تبادل الإجابات أثناء الاختبار. هذا يعتبر غشًا ويخالف قواعد النزاهة الأكاديمية في الجامعة. يمكننا بدلاً من ذلك تكوين مجموعة للمذاكرة قبل الاختبار، وسأكون سعيدًا بمساعدتكم في فهم مواضيع الميكانيكا." ثم يمكنه مغادرة المجموعة وإبلاغ المدرس إذا استمر الضغط عليه.
+                        </p>
+                        <div class="consequence">
+                            <div class="consequence-title">النتيجة:</div>
+                            <p>
+                                برفضه المشاركة في الغش، يحافظ خالد على نزاهته الأكاديمية ويتجنب العواقب الخطيرة المحتملة مثل الرسوب في المادة أو الفصل من الجامعة. قد يواجه بعض الضغط الاجتماعي في البداية، لكنه سيكسب احترام الآخرين على المدى الطويل. كما أنه يتعلم مهارة مهمة في الحياة وهي الوقوف على مبادئه حتى تحت الضغط. اقتراحه بتكوين مجموعة للمذاكرة يقدم بديلاً إيجابيًا يساعد الجميع على النجاح بطريقة أخلاقية.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="response-card not-recommended">
+                    <div class="response-title">
+                        <span class="response-icon">❌</span>
+                        <span>استجابة غير موصى بها</span>
+                    </div>
+                    <div class="response-content">
+                        <p>
+                            <strong>الانضمام للمجموعة والمشاركة في الغش:</strong> قد يستسلم خالد لضغط الأقران ويوافق على المشاركة في تبادل الإجابات، معتقدًا أنه "ما دام الجميع يفعل ذلك" فلا بأس، أو خوفًا من رفض زملائه له إذا لم يشارك.
+                        </p>
+                        <div class="consequence">
+                            <div class="consequence-title">النتيجة:</div>
+                            <p>
+                                المشاركة في الغش تعرض خالد لعواقب أكاديمية وخيمة إذا تم اكتشاف الأمر، بما في ذلك الرسوب في المادة أو حتى الفصل من الجامعة. حتى لو لم يتم اكتشاف الغش، فإنه يفقد فرصة التعلم الحقيقي والاستعداد للمستقبل المهني. كما أن هذا السلوك قد يصبح عادة، مما يؤثر على تطوره الأخلاقي والمهني على المدى الطويل. بالإضافة إلى ذلك، قد يشعر بالذنب والقلق من احتمالية اكتشاف الغش، مما يؤثر على صحته النفسية.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="scenario-container">
+            <h2 class="scenario-title">سيناريو: استخدام الذكاء الاصطناعي في كتابة الأبحاث</h2>
+            <p class="scenario-description">
+                نورة طالبة متفوقة في السنة الثالثة بكلية الآداب في إحدى جامعات الخليج. لديها بحث مهم يجب تسليمه في غضون أيام قليلة، لكنها مشغولة بالتحضير لاختبارات أخرى. اقترحت عليها صديقتها استخدام أداة ذكاء اصطناعي لكتابة البحث بالكامل لتوفير الوقت.
+            </p>
+            
+            <div class="chat-container">
+                <div class="chat-message received">
+                    <div class="chat-bubble">
+                        نورة، لماذا تتعبين نفسك في كتابة البحث؟ استخدمي ChatGPT أو Bard، اكتبي لهم الموضوع وسيعطونك بحثًا كاملاً في دقائق. أنا استخدمته للبحث السابق وحصلت على درجة ممتازة!
+                    </div>
+                </div>
+                <div class="chat-message sent">
+                    <div class="chat-bubble">
+                        لكن ألا يعتبر هذا غشًا؟ الدكتور طلب منا كتابة البحث بأنفسنا.
+                    </div>
+                </div>
+                <div class="chat-message received">
+                    <div class="chat-bubble">
+                        لا أحد سيعرف! يمكنك تعديل بعض الكلمات لتجعليه يبدو بأسلوبك. الجميع يفعل ذلك الآن، لماذا تضيعين وقتك؟ أنت مشغولة بالاختبارات الأخرى.
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="section-title">كيف يمكن لنورة أن تستجيب؟</h3>
+            
+            <div class="response-container">
+                <div class="response-card recommended">
+                    <div class="response-title">
+                        <span class="response-icon">✅</span>
+                        <span>استجابة موصى بها</span>
+                    </div>
+                    <div class="response-content">
+                        <p>
+                            <strong>الالتزام بالنزاهة واستخدام التكنولوجيا بشكل أخلاقي:</strong> يمكن لنورة أن ترد: "أقدر اقتراحك، لكنني أفضل كتابة البحث بنفسي. يمكنني استخدام أدوات الذكاء الاصطناعي للمساعدة في البحث عن المصادر أو تنظيم الأفكار، لكن ليس لكتابة البحث بالكامل. هذا سيساعدني على تطوير مهاراتي البحثية والكتابية التي سأحتاجها في حياتي المهنية. سأنظم وقتي بشكل أفضل وأبدأ العمل على البحث الآن." يمكنها بعد ذلك استخدام التكنولوجيا بطريقة أخلاقية كأداة مساعدة وليس كبديل عن عملها.
+                        </p>
+                        <div class="consequence">
+                            <div class="consequence-title">النتيجة:</div>
+                            <p>
+                                باختيارها الالتزام بالنزاهة الأكاديمية، تتعلم نورة مهارات قيمة في البحث والكتابة والتفكير النقدي لا يمكن اكتسابها من خلال الاعتماد على الذكاء الاصطناعي. تحافظ على سمعتها الأكاديمية وتتجنب مخاطر اكتشاف الغش. كما أنها تطور مهارات إدارة الوقت والتعامل مع الضغط، وهي مهارات ضرورية للنجاح في الحياة المهنية. استخدامها للتكنولوجيا كأداة مساعدة وليس كبديل يعلمها كيفية الاستفادة من التقنيات الحديثة بطريقة أخلاقية.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="response-card not-recommended">
+                    <div class="response-title">
+                        <span class="response-icon">❌</span>
+                        <span>استجابة غير موصى بها</span>
+                    </div>
+                    <div class="response-content">
+                        <p>
+                            <strong>الاعتماد الكامل على الذكاء الاصطناعي:</strong> قد تقرر نورة اتباع نصيحة صديقتها واستخدام الذكاء الاصطناعي لكتابة البحث بالكامل، مع إجراء بعض التعديلات البسيطة لإخفاء مصدره.
+                        </p>
+                        <div class="consequence">
+                            <div class="consequence-title">النتيجة:</div>
+                            <p>
+                                الاعتماد الكامل على الذكاء الاصطناعي يحرم نورة من فرصة تطوير مهاراتها البحثية والكتابية والتفكير النقدي. قد يتم اكتشاف استخدامها للذكاء الاصطناعي من قبل الأستاذ (هناك أدوات للكشف عن المحتوى المنتج بواسطة الذكاء الاصطناعي)، مما قد يؤدي إلى عواقب أكاديمية خطيرة. حتى لو لم يتم اكتشاف الأمر، فإنها تفقد فرصة التعلم الحقيقي وتعتاد على الحلول السهلة، مما قد يؤثر سلبًا على أدائها المهني في المستقبل عندما لا تكون هذه الحلول متاحة.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tips-container">
+            <h3 class="tips-title">نصائح للحفاظ على النزاهة الأكاديمية في العصر الرقمي:</h3>
+            <ul class="tips-list">
+                <li><strong>فهم قواعد النزاهة الأكاديمية:</strong> اطلع على سياسات مؤسستك التعليمية بخصوص النزاهة الأكاديمية والغش والانتحال الأدبي.</li>
+                <li><strong>تعلم التوثيق الصحيح:</strong> تعرف على كيفية توثيق المصادر بشكل صحيح (APA، MLA، إلخ) عند الاقتباس من مصادر خارجية.</li>
+                <li><strong>استخدم التكنولوجيا بشكل أخلاقي:</strong> استخدم أدوات الذكاء الاصطناعي كمساعد للبحث وتنظيم الأفكار، وليس لإنتاج العمل بالكامل.</li>
+                <li><strong>إدارة الوقت:</strong> نظم وقتك جيدًا لتجنب الضغط الذي قد يدفعك للغش أو اتخاذ طرق مختصرة غير أخلاقية.</li>
+                <li><strong>اطلب المساعدة:</strong> إذا كنت تواجه صعوبة في فهم المادة أو إكمال الواجبات، اطلب المساعدة من أساتذتك أو مركز دعم الطلاب.</li>
+                <li><strong>تعلم قول "لا":</strong> كن مستعدًا لرفض المشاركة في الغش حتى تحت ضغط الأقران.</li>
+                <li><strong>فكر في العواقب:</strong> تذكر أن عواقب الغش قد تكون خطيرة وتؤثر على مستقبلك الأكاديمي والمهني.</li>
+                <li><strong>قيّم تعلمك:</strong> ركز على قيمة التعلم والمهارات التي تكتسبها، وليس فقط على الدرجات.</li>
+            </ul>
+        </div>
+        
+        <div class="resources-container">
+            <h3 class="resources-title">موارد للمساعدة في قطر ودول الخليج:</h3>
+            <ul class="resources-list">
+                <li class="resource-item">
+                    <div class="resource-name">مركز دعم التعلم - جامعة قطر</div>
+                    <div class="resource-description">يقدم ورش عمل حول مهارات الكتابة الأكاديمية والتوثيق الصحيح للمصادر.</div>
+                    <a href="https://www.qu.edu.qa/ar/students/support-and-development/student-learning-support" class="resource-link" target="_blank">زيارة الموقع</a>
+                </li>
+                <li class="resource-item">
+                    <div class="resource-name">مركز الكتابة الأكاديمية - جامعة حمد بن خليفة</div>
+                    <div class="resource-description">يقدم استشارات فردية لمساعدة الطلاب في تطوير مهارات الكتابة الأكاديمية.</div>
+                    <a href="https://www.hbku.edu.qa/ar/student-life/student-affairs" class="resource-link" target="_blank">زيارة الموقع</a>
+                </li>
+                <li class="resource-item">
+                    <div class="resource-name">دليل النزاهة الأكاديمية - وزارة التعليم والتعليم العالي في قطر</div>
+                    <div class="resource-description">دليل شامل حول النزاهة الأكاديمية وكيفية تجنب الانتحال الأدبي.</div>
+                    <a href="https://www.edu.gov.qa/ar/pages/default.aspx" class="resource-link" target="_blank">زيارة الموقع</a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="navigation">
+            <a href="../index.html" class="nav-button">الرئيسية</a>
+            <a href="scenario_cross_cultural_gaming.html" class="nav-button">السيناريو التالي: الألعاب عبر الثقافات</a>
+        </div>
+    </div>
+</body>
+</html>

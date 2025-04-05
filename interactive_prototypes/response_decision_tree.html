@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شجرة قرارات الاستجابة</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+            direction: rtl;
+        }
+        
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .intro {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .scenario {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        
+        .scenario.active {
+            display: block;
+        }
+        
+        .scenario-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .scenario-icon {
+            font-size: 2rem;
+            margin-left: 1rem;
+        }
+        
+        .scenario-title {
+            margin: 0;
+            color: #4CAF50;
+        }
+        
+        .chat-container {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .message {
+            margin-bottom: 1rem;
+            display: flex;
+        }
+        
+        .message-bubble {
+            padding: 0.8rem 1rem;
+            border-radius: 18px;
+            max-width: 70%;
+        }
+        
+        .message.received {
+            justify-content: flex-start;
+        }
+        
+        .message.sent {
+            justify-content: flex-end;
+        }
+        
+        .message.received .message-bubble {
+            background-color: #e0e0e0;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .message.sent .message-bubble {
+            background-color: #4CAF50;
+            color: white;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .option-button {
+            background-color: white;
+            border: 2px solid #4CAF50;
+            color: #4CAF50;
+            padding: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-align: right;
+            transition: all 0.3s;
+        }
+        
+        .option-button:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .outcome {
+            background-color: #f0f8ff;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            border-right: 4px solid #4CAF50;
+            display: none;
+        }
+        
+        .outcome.active {
+            display: block;
+        }
+        
+        .outcome-title {
+            color: #4CAF50;
+            margin-top: 0;
+        }
+        
+        .toolkit-item {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-right: 4px solid #4CAF50;
+        }
+        
+        .toolkit-item h3 {
+            color: #4CAF50;
+            margin-top: 0;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        
+        .nav-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-button:hover {
+            background-color: #3e8e41;
+        }
+        
+        .scenario-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .scenario-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            width: calc(33.333% - 1rem);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .scenario-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .scenario-card h3 {
+            color: #4CAF50;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .scenario-card h3 span {
+            margin-left: 0.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .next-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .next-button:hover {
+            background-color: #3e8e41;
+        }
+        
+        .restart-button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .restart-button:hover {
+            background-color: #d32f2f;
+        }
+        
+        .personal-toolkit {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        
+        .personal-toolkit.active {
+            display: block;
+        }
+        
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .scenario-card {
+                width: 100%;
+            }
+            
+            .message-bubble {
+                max-width: 85%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>شجرة قرارات الاستجابة</h1>
+        <div class="subtitle">تعلم كيفية الرد على السمية عبر الإنترنت بطريقة فعالة</div>
+    </header>
+    
+    <div class="container">
+        <div class="intro">
+            <h2>تطوير استراتيجيات الاستجابة</h2>
+            <p>عندما تواجه سلوكاً سامّاً عبر الإنترنت، فإن طريقة استجابتك يمكن أن تحدث فرقاً كبيراً. تساعدك هذه الأداة التفاعلية على تعلم استراتيجيات فعالة للرد على مختلف أنواع السمية عبر الإنترنت من خلال سيناريوهات واقعية.</p>
+            <p>اختر سيناريو من أدناه للبدء، ثم اتخذ قرارات حول كيفية الرد. سترى نتائج قراراتك وتبني مجموعة أدوات شخصية من استراتيجيات الاستجابة.</p>
+        </div>
+        
+        <div class="scenario-selector">
+            <div class="scenario-card" onclick="selectScenario('cyberbullying')">
+                <h3><span>😢</span> التنمر الإلكتروني</h3>
+                <p>تعلم كيفية الرد على التعليقات المسيئة والمضايقات المتكررة.</p>
+            </div>
+            
+            <div class="scenario-card" onclick="selectScenario('hate-speech')">
+                <h3><span>🚫</span> خطاب الكراهية</h3>
+                <p>استكشف كيفية التعامل مع التعليقات التي تستهدف هويتك أو مجموعتك.</p>
+            </div>
+            
+            <div class="scenario-card" onclick="selectScenario('misinformation')">
+                <h3><span>❓</span> المعلومات المضللة</h3>
+                <p>تعلم كيفية الرد عندما ينشر شخص ما معلومات خاطئة عنك أو عن موضوع تهتم به.</p>
+            </div>
+        </div>
+        
+        <!-- Cyberbullying Scenario -->
+        <div id="cyberbullying-scenario" class="scenario">
+            <div class="scenario-header">
+                <div class="scenario-icon">😢</div>
+                <h2 class="scenario-title">التنمر الإلكتروني: تعليقات مسيئة على منشور</h2>
+            </div>
+            
+            <p>لقد نشرت صورة لمشروع مدرسي عملت عليه بجد على انستغرام. بعد فترة وجيزة، بدأت تتلقى تعليقات سلبية ومسيئة من زميل في الصف:</p>
+            
+            <div class="chat-container">
+                <div class="message received">
+                    <div class="message-bubble">هذا أسوأ مشروع رأيته على الإطلاق 😂 كيف يمكن لشخص أن يكون بهذا الغباء؟</div>
+                </div>
+                
+                <div class="message received">
+                    <div class="message-bubble">لا أحد يهتم بمشاريعك السخيفة. توقف عن نشر هذه الأشياء التافهة!</div>
+                </div>
+                
+                <div class="message received">
+                    <div class="message-bubble">@أصدقاء_المدرسة تعالوا شاهدوا هذا الفشل الذريع 🤣</div>
+                </div>
+            </div>
+            
+            <p>كيف ترد على هذه التعليقات المسيئة؟</p>
+            
+            <div class="options-container">
+                <button class="option-button" onclick="showOutcome('cyberbullying', 'respond-anger')">الرد بغضب: "من تظن نفسك؟ مشروعي أفضل بكثير من أي شيء يمكنك عمله!"</button>
+                
+                <button class="option-button" onclick="showOutcome('cyberbullying', 'ignore')">تجاهل التعليقات وعدم الرد عليها</button>
+                
+                <button class="option-button" onclick="showOutcome('cyberbullying', 'block-report')">حظر الشخص والإبلاغ عن التعليقات المسيئة</button>
+                
+                <button class="option-button" onclick="showOutcome('cyberbullying', 'seek-support')">التحدث مع شخص بالغ موثوق به وطلب المساعدة</button>
+            </div>
+            
+            <!-- Outcomes -->
+            <div id="cyberbullying-respond-anger" class="outcome">
+                <h3 class="outcome-title">النتيجة: تصعيد الموقف</h3>
+                <p>عندما رددت بغضب، استمر المتنمر في المضايقة وأصبحت التعليقات أكثر عدوانية. انضم آخرون إلى المحادثة وتحول الأمر إلى نزاع علني. أصبحت تشعر بمزيد من الإحباط والغضب.</p>
+                <p><strong>الدرس المستفاد:</strong> الرد بغضب غالباً ما يؤدي إلى تصعيد الموقف ويعطي المتنمر الاهتمام الذي يسعى إليه. من الأفضل اتخاذ نهج أكثر هدوءاً أو طلب المساعدة.</p>
+                <button class="next-button" onclick="addToToolkit('cyberbullying', 'avoid-angry-responses')">التالي</button>
+            </div>
+            
+            <div id="cyberbullying-ignore" class="outcome">
+                <h3 class="outcome-title">النتيجة: نتائج مختلطة</h3>
+                <p>قررت تجاهل التعليقات. في البداية، استمر المتنمر لفترة قصيرة، لكنه توقف في النهاية عندما لم يحصل على رد فعل منك. ومع ذلك، لا تزال التعليقات المسيئة موجودة على منشورك، ويمكن للآخرين رؤيتها.</p>
+                <p><strong>الدرس المستفاد:</strong> التجاهل يمكن أن يكون فعالاً في بعض الحالات، لكنه لا يزيل المحتوى المسيء. قد يكون من المفيد اتخاذ خطوات إضافية مثل حذف التعليقات أو الإبلاغ عنها.</p>
+                <button class="next-button" onclick="addToToolkit('cyberbullying', 'strategic-ignoring')">التالي</button>
+            </div>
+            
+            <div id="cyberbullying-block-report" class="outcome">
+                <h3 class="outcome-title">النتيجة: حل فعال</h3>
+                <p>قمت بحظر الشخص والإبلاغ عن التعليقات المسيئة. قامت المنصة بإزالة التعليقات لانتهاكها معايير المجتمع. لم يعد بإمكان المتنمر التعليق على منشوراتك، وأصبحت تجربتك عبر الإنترنت أكثر إيجابية.</p>
+                <p><strong>الدرس المستفاد:</strong> استخدام أدوات الحظر والإبلاغ المتاحة على المنصات يمكن أن يكون فعالاً جداً في وقف التنمر الإلكتروني والحفاظ على مساحة آمنة لك عبر الإنترنت.</p>
+                <button class="next-button" onclick="addToToolkit('cyberbullying', 'use-platform-tools')">التالي</button>
+            </div>
+            
+            <div id="cyberbullying-seek-support" class="outcome">
+                <h3 class="outcome-title">النتيجة: دعم وحل</h3>
+                <p>تحدثت مع والديك ومعلمك حول الموقف. قدموا لك الدعم العاطفي وساعدوك في الإبلاغ عن التعليقات. تحدث المعلم أيضاً مع الطالب المعني وأولياء أموره حول سلوكه غير المقبول.</p>
+                <p><strong>الدرس المستفاد:</strong> طلب المساعدة من البالغين الموثوق بهم يمكن أن يوفر الدعم العاطفي ويساعد في حل المشكلة. التنمر ليس شيئاً يجب أن تتعامل معه بمفردك.</p>
+                <button class="next-button" onclick="addToToolkit('cyberbullying', 'seek-adult-support')">التالي</button>
+            </div>
+        </div>
+        
+        <!-- Hate Speech Scenario -->
+        <div id="hate-speech-scenario" class="scenario">
+            <div class="scenario-header">
+                <div class="scenario-icon">🚫</div>
+                <h2 class="scenario-title">خطاب الكراهية: تعليقات تستهدف هويتك</h2>
+            </div>
+            
+            <p>شاركت في نقاش عبر الإنترنت حول موضوع ثقافي يتعلق بخلفيتك. بدأ أحد المستخدمين في نشر تعليقات تستهدف هويتك الثقافية أو الدينية:</p>
+            
+            <div class="chat-container">
+                <div class="message received">
+                    <div class="message-bubble">الناس من ثقافتك دائماً ما يكونون [تعليق مسيء]. لماذا لا تعودون من حيث أتيتم؟</div>
+                </div>
+                
+                <div class="message received">
+                    <div class="message-bubble">كل المشاكل في مجتمعنا بسبب أشخاص مثلك. أنتم لا تنتمون إلى هنا.</div>
+                </div>
+                
+                <div class="message received">
+                    <div class="message-bubble">دينك/ثقافتك متخلف ولا مكان له في العالم الحديث.</div>
+                </div>
+            </div>
+            
+            <p>كيف ترد على خطاب الكراهية هذا؟</p>
+            
+            <div class="options-container">
+                <button class="option-button" onclick="showOutcome('hate-speech', 'educate')">محاولة تثقيف الشخص: "أعتقد أن لديك بعض المفاهيم الخاطئة عن ثقافتي. دعني أشارك معك بعض المعلومات الصحيحة..."</button>
+                
+                <button class="option-button" onclick="showOutcome('hate-speech', 'report-block')">الإبلاغ عن التعليقات كخطاب كراهية وحظر المستخدم</button>
+                
+                <button class="option-button" onclick="showOutcome('hate-speech', 'community-support')">طلب الدعم من المجتمع: "هذه التعليقات مؤذية وغير دقيقة. هل يمكن للآخرين المساعدة في توضيح هذا الأمر؟"</button>
+                
+                <button class="option-button" onclick="showOutcome('hate-speech', 'disengage')">إنهاء المحادثة: "لن أشارك في نقاش يتضمن خطاب كراهية. هذا غير مقبول."</button>
+            </div>
+            
+            <!-- Outcomes -->
+            <div id="hate-speech-educate" class="outcome">
+                <h3 class="outcome-title">النتيجة: نتائج متفاوتة</h3>
+                <p>حاولت تقديم معلومات دقيقة عن ثقافتك. في بعض الحالات، قد يؤدي هذا إلى تغيير وجهة نظر الشخص أو على الأقل جعله يفكر. ومع ذلك، غالباً ما يكون الأشخاص الذين ينشرون خطاب الكراهية غير منفتحين للتعلم، وقد يستمرون في نشر تعليقات مسيئة.</p>
+                <p><strong>الدرس المستفاد:</strong> التثقيف يمكن أن يكون مفيداً للمتابعين الصامتين للنقاش، لكنه قد لا يغير رأي الشخص المسيء. ضع في اعتبارك صحتك النفسية قبل الانخراط في محاولات التثقيف.</p>
+                <button class="next-button" onclick="addToToolkit('hate-speech', 'educational-approach')">التالي</button>
+            </div>
+            
+            <div id="hate-speech-report-block" class="outcome">
+                <h3 class="outcome-title">النتيجة: حماية فعالة</h3>
+                <p>قمت بالإبلاغ عن التعليقات كخطاب كراهية وحظر المستخدم. قامت المنصة بمراجعة التقرير وإزالة التعليقات المسيئة لانتهاكها سياسات المجتمع. لم تعد تتعرض لمحتوى مسيء من هذا المستخدم.</p>
+                <p><strong>الدرس المستفاد:</strong> معظم المنصات لديها سياسات صارمة ضد خطاب الكراهية. الإبلاغ عن المحتوى المسيء والحظر هما أدوات فعالة لحماية نفسك وإبقاء المنصات آمنة للجميع.</p>
+                <button class="next-button" onclick="addToToolkit('hate-speech', 'report-hate-speech')">التالي</button>
+            </div>
+            
+            <div id="hate-speech-community-support" class="outcome">
+                <h3 class="outcome-title">النتيجة: تضامن المجتمع</h3>
+                <p>طلبت الدعم من المجتمع، وتدخل العديد من المستخدمين الآخرين للدفاع عنك وتصحيح المعلومات الخاطئة. أظهر هذا للشخص المسيء أن آراءه غير مقبولة على نطاق واسع، وشعرت بالدعم من المجتمع.</p>
+                <p><strong>الدرس المستفاد:</strong> المتفرجون يمكن أن يلعبوا دوراً مهماً في مواجهة خطاب الكراهية. طلب الدعم من المجتمع يمكن أن يخلق بيئة أكثر شمولاً ويظهر أن خطاب الكراهية غير مقبول.</p>
+                <button class="next-button" onclick="addToToolkit('hate-speech', 'mobilize-community')">التالي</button>
+            </div>
+            
+            <div id="hate-speech-disengage" class="outcome">
+                <h3 class="outcome-title">النتيجة: حماية الذات</h3>
+                <p>أنهيت المحادثة بوضوح وحزم، مشيراً إلى أنك لن تشارك في نقاش يتضمن خطاب كراهية. هذا حمى صحتك النفسية وأوضح للآخرين أن هذا السلوك غير مقبول.</p>
+                <p><strong>الدرس المستفاد:</strong> من المهم وضع حدود واضحة وحماية صحتك النفسية. لست مضطراً للمشاركة في نقاشات مسيئة، ويمكنك الانسحاب بطريقة واضحة وحازمة.</p>
+                <button class="next-button" onclick="addToToolkit('hate-speech', 'set-boundaries')">التالي</button>
+            </div>
+        </div>
+        
+        <!-- Misinformation Scenario -->
+        <div id="misinformation-scenario" class="scenario">
+            <div class="scenario-header">
+                <div class="scenario-icon">❓</div>
+                <h2 class="scenario-title">المعلومات المضللة: شائعات كاذبة</h2>
+            </div>
+            
+            <p>اكتشفت أن أحد زملائك في المدرسة ينشر معلومات خاطئة عنك في مجموعة واتساب للصف. يدعي أنك غشّشت في الاختبار الأخير وحصلت على علامات عالية بطريقة غير شريفة:</p>
+            
+            <div class="chat-container">
+                <div class="message received">
+                    <div class="message-bubble">هل تعلمون أن [اسمك] حصل على علامة عالية في اختبار الرياضيات لأنه غش؟ رأيته ينظر إلى ورقة شخص آخر.</div>
+                </div>
+                
+                <div class="message received">
+                    <div class="message-bubble">سمعت أيضاً أنه يحصل دائماً على مساعدة خاصة من المعلمين. ليس عادلاً بالنسبة لنا.</div>
+                </div>
+                
+                <div class="message received">
+                    <div class="message-bubble">لا تثقوا في الأشخاص الذين يتظاهرون بالذكاء مثله. إنه محتال.</div>
+                </div>
+            </div>
+            
+            <p>كيف ترد على هذه المعلومات المضللة عنك؟</p>
+            
+            <div class="options-container">
+                <button class="option-button" onclick="showOutcome('misinformation', 'direct-correction')">تصحيح المعلومات مباشرة: "هذه ادعاءات كاذبة. لقد درست بجد للاختبار ولم أغش. أرجو عدم نشر معلومات غير صحيحة عني."</button>
+                
+                <button class="option-button" onclick="showOutcome('misinformation', 'evidence')">تقديم أدلة: "حصلت على علامات جيدة في جميع اختبارات الرياضيات السابقة أيضاً. يمكنكم سؤال المعلم عن جهودي في الصف."</button>
+                
+                <button class="option-button" onclick="showOutcome('misinformation', 'teacher-help')">طلب مساعدة المعلم: "هذه ادعاءات خطيرة. سأتحدث مع المعلم لتوضيح الأمر."</button>
+                
+                <button class="option-button" onclick="showOutcome('misinformation', 'private-conversation')">التحدث مع الشخص على انفراد: "أود التحدث معك بشكل خاص حول ما نشرته عني. هذه المعلومات غير صحيحة وتؤذي سمعتي."</button>
+            </div>
+            
+            <!-- Outcomes -->
+            <div id="misinformation-direct-correction" class="outcome">
+                <h3 class="outcome-title">النتيجة: توضيح عام</h3>
+                <p>رددت في المجموعة بتصحيح مباشر للمعلومات الخاطئة. بعض الطلاب صدقوك وقدموا الدعم، بينما شكك آخرون في روايتك. على الأقل، أصبح الجميع على دراية بأن هناك جانباً آخر للقصة.</p>
+                <p><strong>الدرس المستفاد:</strong> التصحيح المباشر يمكن أن يكون فعالاً في بعض الحالات، لكنه قد لا يقنع الجميع. من المهم الرد بهدوء واحترافية، وتجنب الدخول في جدال حاد.</p>
+                <button class="next-button" onclick="addToToolkit('misinformation', 'calm-correction')">التالي</button>
+            </div>
+            
+            <div id="misinformation-evidence" class="outcome">
+                <h3 class="outcome-title">النتيجة: إقناع بالأدلة</h3>
+                <p>قدمت أدلة على أدائك الأكاديمي المتسق، مثل العلامات السابقة والجهود المبذولة في الدراسة. هذا أقنع العديد من زملائك بأن الادعاءات كانت كاذبة، وبدأ بعضهم في الدفاع عنك.</p>
+                <p><strong>الدرس المستفاد:</strong> تقديم أدلة ملموسة يمكن أن يكون أكثر إقناعاً من مجرد النفي. الحقائق والأدلة هي أدوات قوية لمكافحة المعلومات المضللة.</p>
+                <button class="next-button" onclick="addToToolkit('misinformation', 'provide-evidence')">التالي</button>
+            </div>
+            
+            <div id="misinformation-teacher-help" class="outcome">
+                <h3 class="outcome-title">النتيجة: تدخل سلطة</h3>
+                <p>تحدثت مع المعلم حول الادعاءات الكاذبة. تدخل المعلم في المجموعة وأكد أنك لم تغش وأن أداءك كان نتيجة للعمل الجاد. هذا أوقف الشائعات بشكل فعال.</p>
+                <p><strong>الدرس المستفاد:</strong> في بعض الحالات، يمكن أن يكون تدخل شخص ذي سلطة (مثل المعلم أو المشرف) فعالاً جداً في وقف انتشار المعلومات المضللة، خاصة عندما تكون الادعاءات خطيرة.</p>
+                <button class="next-button" onclick="addToToolkit('misinformation', 'authority-intervention')">التالي</button>
+            </div>
+            
+            <div id="misinformation-private-conversation" class="outcome">
+                <h3 class="outcome-title">النتيجة: حل شخصي</h3>
+                <p>تحدثت مع الشخص على انفراد بهدوء وسألته عن سبب نشر هذه المعلومات. اتضح أنه كان يشعر بالغيرة من نجاحك. بعد المحادثة، اعتذر ونشر تصحيحاً في المجموعة.</p>
+                <p><strong>الدرس المستفاد:</strong> أحياناً يكون التواصل المباشر والخاص مع مصدر المعلومات المضللة هو الأكثر فعالية. فهم الدوافع الكامنة وراء السلوك يمكن أن يساعد في الوصول إلى حل.</p>
+                <button class="next-button" onclick="addToToolkit('misinformation', 'private-resolution')">التالي</button>
+            </div>
+        </div>
+        
+        <!-- Personal Response Toolkit -->
+        <div id="personal-toolkit" class="personal-toolkit">
+            <h2>مجموعة أدوات الاستجابة الشخصية الخاصة بك</h2>
+            <p>بناءً على قراراتك، قمت ببناء مجموعة أدوات شخصية للاستجابة للسمية عبر الإنترنت. استخدم هذه الاستراتيجيات عندما تواجه مواقف مماثلة في المستقبل:</p>
+            
+            <div id="toolkit-items-container">
+                <!-- Toolkit items will be added here dynamically -->
+            </div>
+            
+            <div class="navigation">
+                <button class="restart-button" onclick="restartTool()">إعادة التشغيل</button>
+                <a href="index.html" class="nav-button">العودة إلى الصفحة الرئيسية</a>
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <a href="index.html" class="nav-button">العودة إلى الصفحة الرئيسية</a>
+            <a href="safety_settings_simulator.html" class="nav-button">استكشاف محاكي إعدادات الأمان</a>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2025 - جميع الحقوق محفوظة</p>
+    </footer>
+    
+    <script>
+        // Toolkit items data
+        const toolkitItems = {
+            'cyberbullying': {
+                'avoid-angry-responses': {
+                    title: 'تجنب الردود الغاضبة',
+                    description: 'الرد بغضب يمكن أن يؤدي إلى تصعيد الموقف ويعطي المتنمر الاهتمام الذي يسعى إليه. خذ وقتاً للتنفس والتفكير قبل الرد.'
+                },
+                'strategic-ignoring': {
+                    title: 'التجاهل الاستراتيجي',
+                    description: 'في بعض الحالات، يمكن أن يكون تجاهل المتنمر فعالاً لأنه يحرمه من الاهتمام الذي يسعى إليه. ولكن تأكد من اتخاذ خطوات لحماية نفسك، مثل حذف التعليقات المسيئة.'
+                },
+                'use-platform-tools': {
+                    title: 'استخدام أدوات المنصة',
+                    description: 'استفد من أدوات الحظر والإبلاغ والخصوصية المتاحة على منصات التواصل الاجتماعي. هذه الأدوات موجودة لحمايتك.'
+                },
+                'seek-adult-support': {
+                    title: 'طلب دعم البالغين',
+                    description: 'لا تتردد في طلب المساعدة من الوالدين أو المعلمين أو البالغين الموثوق بهم. التنمر ليس شيئاً يجب أن تتعامل معه بمفردك.'
+                }
+            },
+            'hate-speech': {
+                'educational-approach': {
+                    title: 'النهج التعليمي',
+                    description: 'تقديم معلومات دقيقة يمكن أن يساعد في مكافحة الجهل والتحيز. ولكن ضع في اعتبارك صحتك النفسية قبل الانخراط في محاولات التثقيف.'
+                },
+                'report-hate-speech': {
+                    title: 'الإبلاغ عن خطاب الكراهية',
+                    description: 'معظم المنصات لديها سياسات صارمة ضد خطاب الكراهية. الإبلاغ عن المحتوى المسيء يساعد في الحفاظ على سلامة المجتمع عبر الإنترنت.'
+                },
+                'mobilize-community': {
+                    title: 'حشد دعم المجتمع',
+                    description: 'طلب الدعم من المجتمع يمكن أن يظهر أن خطاب الكراهية غير مقبول على نطاق واسع ويخلق بيئة أكثر شمولاً.'
+                },
+                'set-boundaries': {
+                    title: 'وضع حدود واضحة',
+                    description: 'من المهم وضع حدود واضحة وحماية صحتك النفسية. لست مضطراً للمشاركة في نقاشات مسيئة.'
+                }
+            },
+            'misinformation': {
+                'calm-correction': {
+                    title: 'التصحيح الهادئ',
+                    description: 'تصحيح المعلومات الخاطئة بهدوء واحترافية يمكن أن يساعد في توضيح الحقيقة دون تصعيد الموقف.'
+                },
+                'provide-evidence': {
+                    title: 'تقديم الأدلة',
+                    description: 'الحقائق والأدلة هي أدوات قوية لمكافحة المعلومات المضللة. قدم أدلة ملموسة عندما يكون ذلك ممكناً.'
+                },
+                'authority-intervention': {
+                    title: 'تدخل السلطة',
+                    description: 'في بعض الحالات، يمكن أن يكون تدخل شخص ذي سلطة (مثل المعلم أو المشرف) فعالاً جداً في وقف انتشار المعلومات المضللة.'
+                },
+                'private-resolution': {
+                    title: 'الحل الخاص',
+                    description: 'التواصل المباشر والخاص مع مصدر المعلومات المضللة يمكن أن يساعد في فهم الدوافع والوصول إلى حل.'
+                }
+            }
+        };
+        
+        // User's personal toolkit
+        let userToolkit = [];
+        
+        // Function to select a scenario
+        function selectScenario(scenarioType) {
+            // Hide all scenarios
+            const allScenarios = document.querySelectorAll('.scenario');
+            allScenarios.forEach(scenario => {
+                scenario.classList.remove('active');
+            });
+            
+            // Show the selected scenario
+            const selectedScenario = document.getElementById(`${scenarioType}-scenario`);
+            selectedScenario.classList.add('active');
+            
+            // Scroll to the scenario
+            selectedScenario.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Function to show outcome
+        function showOutcome(scenarioType, outcomeType) {
+            // Hide all outcomes for this scenario
+            const allOutcomes = document.querySelectorAll(`#${scenarioType}-scenario .outcome`);
+            allOutcomes.forEach(outcome => {
+                outcome.classList.remove('active');
+            });
+            
+            // Show the selected outcome
+            const selectedOutcome = document.getElementById(`${scenarioType}-${outcomeType}`);
+            selectedOutcome.classList.add('active');
+            
+            // Scroll to the outcome
+            selectedOutcome.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Function to add item to toolkit
+        function addToToolkit(scenarioType, itemType) {
+            // Add the item to user's toolkit if not already added
+            const item = toolkitItems[scenarioType][itemType];
+            const itemId = `${scenarioType}-${itemType}`;
+            
+            if (!userToolkit.includes(itemId)) {
+                userToolkit.push(itemId);
+            }
+            
+            // Show the personal toolkit
+            showPersonalToolkit();
+        }
+        
+        // Function to show personal toolkit
+        function showPersonalToolkit() {
+            // Hide all scenarios
+            const allScenarios = document.querySelectorAll('.scenario');
+            allScenarios.forEach(scenario => {
+                scenario.classList.remove('active');
+            });
+            
+            // Clear the toolkit container
+            const toolkitContainer = document.getElementById('toolkit-items-container');
+            toolkitContainer.innerHTML = '';
+            
+            // Add each item in the user's toolkit
+            userToolkit.forEach(itemId => {
+                const [scenarioType, itemType] = itemId.split('-');
+                const item = toolkitItems[scenarioType][itemType];
+                
+                const itemElement = document.createElement('div');
+                itemElement.className = 'toolkit-item';
+                itemElement.innerHTML = `
+                    <h3>${item.title}</h3>
+                    <p>${item.description}</p>
+                `;
+                
+                toolkitContainer.appendChild(itemElement);
+            });
+            
+            // Show the personal toolkit
+            const personalToolkit = document.getElementById('personal-toolkit');
+            personalToolkit.classList.add('active');
+            
+            // Scroll to the toolkit
+            personalToolkit.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Function to restart the tool
+        function restartTool() {
+            // Clear the user's toolkit
+            userToolkit = [];
+            
+            // Hide all scenarios and the personal toolkit
+            const allScenarios = document.querySelectorAll('.scenario');
+            allScenarios.forEach(scenario => {
+                scenario.classList.remove('active');
+            });
+            
+            const personalToolkit = document.getElementById('personal-toolkit');
+            personalToolkit.classList.remove('active');
+            
+            // Hide all outcomes
+            const allOutcomes = document.querySelectorAll('.outcome');
+            allOutcomes.forEach(outcome => {
+                outcome.classList.remove('active');
+            });
+            
+            // Scroll to the top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

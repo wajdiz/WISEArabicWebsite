@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سيناريوهات الاحتيال عبر الإنترنت - تعليم السمية عبر الإنترنت</title>
+    <style>
+        :root {
+            --primary-color: #4e54c8;
+            --secondary-color: #8f94fb;
+            --accent-color: #ff6b6b;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --text-color: #333;
+            --light-bg: #f9f9f9;
+            --card-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            --transition-speed: 0.3s;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #FF512F, #F09819);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 10px;
+        }
+        
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .breadcrumbs {
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .breadcrumbs a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+        }
+        
+        .intro {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .intro-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .scenario-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .scenario {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .scenario-header {
+            background-color: #FF512F;
+            color: white;
+            padding: 15px 20px;
+        }
+        
+        .scenario-title {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+        
+        .scenario-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .scenario-content {
+            padding: 20px;
+        }
+        
+        .scenario-description {
+            margin-bottom: 20px;
+        }
+        
+        .chat-container {
+            background-color: #f5f5f5;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .message-bubble {
+            max-width: 80%;
+            margin-bottom: 15px;
+            padding: 12px 15px;
+            border-radius: 18px;
+            position: relative;
+            font-size: 0.95rem;
+        }
+        
+        .received {
+            background-color: #e5e5ea;
+            align-self: flex-start;
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .sent {
+            background-color: #dcf8c6;
+            align-self: flex-end;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+            text-align: right;
+        }
+        
+        .message-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .message-sender {
+            font-weight: bold;
+            margin-left: 8px;
+        }
+        
+        .message-time {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        
+        .message-content {
+            word-break: break-word;
+        }
+        
+        .impact-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .impact-title {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .response-options {
+            margin-top: 20px;
+        }
+        
+        .response-title {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: background-color var(--transition-speed);
+        }
+        
+        .option:hover {
+            background-color: #e5e5ea;
+        }
+        
+        .option.recommended {
+            border-right: 4px solid var(--success-color);
+        }
+        
+        .option.not-recommended {
+            border-right: 4px solid var(--danger-color);
+        }
+        
+        .option-label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        
+        .expert-tip {
+            background-color: rgba(255, 81, 47, 0.1);
+            border-right: 4px solid #FF512F;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px 0 0 8px;
+        }
+        
+        .expert-tip-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #FF512F;
+        }
+        
+        .resources {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .resources-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .resources-list {
+            list-style-type: none;
+        }
+        
+        .resources-list li {
+            margin-bottom: 10px;
+            padding-right: 20px;
+            position: relative;
+        }
+        
+        .resources-list li::before {
+            content: "•";
+            position: absolute;
+            right: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .resources-list a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .resources-list a:hover {
+            text-decoration: underline;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+        
+        .nav-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color var(--transition-speed);
+        }
+        
+        .nav-button:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .back-to-home {
+            background-color: #6c757d;
+        }
+        
+        .back-to-home:hover {
+            background-color: #5a6268;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .scenario-title {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>سيناريوهات الاحتيال عبر الإنترنت</h1>
+                <p class="subtitle">فهم وتمييز والاستجابة لعمليات الاحتيال عبر الإنترنت</p>
+            </div>
+        </header>
+        
+        <div class="breadcrumbs">
+            <a href="../index.html">الرئيسية</a> &gt; <a href="../index.html#understand-section">فهم السمية عبر الإنترنت</a> &gt; سيناريوهات الاحتيال عبر الإنترنت
+        </div>
+        
+        <div class="intro">
+            <h2 class="intro-title">ما هي عمليات الاحتيال عبر الإنترنت؟</h2>
+            <p>عمليات الاحتيال عبر الإنترنت هي محاولات خداع تهدف إلى الحصول على المال أو المعلومات الشخصية أو بيانات الاعتماد من الضحايا. يستخدم المحتالون تكتيكات مختلفة مثل الهندسة الاجتماعية، والرسائل المزيفة، والعروض التي تبدو جيدة جدًا لدرجة يصعب تصديقها، والتهديدات لخداع الناس.</p>
+            <p>توضح السيناريوهات التالية الأشكال الشائعة للاحتيال عبر الإنترنت وتقدم إرشادات حول كيفية التعرف عليها والاستجابة لها بفعالية.</p>
+        </div>
+        
+        <div class="scenario-container">
+            <div class="scenario">
+                <div class="scenario-header">
+                    <h3 class="scenario-title">السيناريو 1: عرض الجوائز المزيفة</h3>
+                    <p class="scenario-subtitle">رسالة عبر البريد الإلكتروني</p>
+                </div>
+                <div class="scenario-content">
+                    <div class="scenario-description">
+                        <p>أحمد، 15 عامًا، تلقى رسالة بريد إلكتروني تخبره أنه فاز بهاتف ذكي جديد في مسابقة لم يتذكر المشاركة فيها. تطلب الرسالة منه تقديم معلوماته الشخصية وتفاصيل بطاقة الائتمان الخاصة بوالديه لدفع "رسوم الشحن" البالغة 5 دولارات.</p>
+                    </div>
+                    
+                    <div class="chat-container">
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">شركة تكنولوجيا عالمية:</span>
+                                <span class="message-time">10:15 ص</span>
+                            </div>
+                            <div class="message-content">
+                                <p>تهانينا أحمد! لقد فزت بهاتف ذكي جديد من أحدث طراز في مسابقتنا الشهرية! أنت واحد من 5 فائزين محظوظين تم اختيارهم عشوائيًا.</p>
+                                <p>لاستلام جائزتك، نحتاج فقط إلى:</p>
+                                <p>- الاسم الكامل</p>
+                                <p>- العنوان</p>
+                                <p>- رقم الهاتف</p>
+                                <p>- تفاصيل بطاقة الائتمان لدفع رسوم الشحن البالغة 5 دولارات فقط</p>
+                                <p>يرجى الرد في غضون 24 ساعة وإلا ستفقد جائزتك!</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble sent">
+                            <div class="message-info">
+                                <span class="message-sender">أحمد:</span>
+                                <span class="message-time">10:20 ص</span>
+                            </div>
+                            <div class="message-content">
+                                <p>واو! هذا رائع! لكن لا أتذكر المشاركة في أي مسابقة. هل يمكنك تقديم مزيد من المعلومات حول المسابقة وكيف تم اختياري؟</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">شركة تكنولوجيا عالمية:</span>
+                                <span class="message-time">10:25 ص</span>
+                            </div>
+                            <div class="message-content">
+                                <p>تم اختيارك عشوائيًا من قاعدة بيانات المستخدمين لدينا. العرض محدود بالوقت! أرسل معلوماتك الآن لتأمين جائزتك. هذه فرصة نادرة!</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="impact-section">
+                        <h4 class="impact-title">التأثير المحتمل:</h4>
+                        <p>يمكن أن تؤدي عمليات احتيال الجوائز المزيفة إلى:</p>
+                        <ul>
+                            <li>سرقة المعلومات الشخصية والمالية</li>
+                            <li>الاحتيال المالي وسرقة الأموال</li>
+                            <li>سرقة الهوية</li>
+                            <li>تلقي المزيد من رسائل الاحتيال في المستقبل</li>
+                            <li>تثبيت البرامج الضارة إذا تم النقر على الروابط</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="response-options">
+                        <h4 class="response-title">خيارات الاستجابة:</h4>
+                        
+                        <div class="options-container">
+                            <div class="option recommended">
+                                <span class="option-label">موصى به: تجاهل وإبلاغ</span>
+                                <p>يجب على أحمد تجاهل الرسالة وعدم تقديم أي معلومات شخصية أو مالية.</p>
+                                <p>من المهم إبلاغ الوالدين أو شخص بالغ موثوق به عن الرسالة المشبوهة.</p>
+                                <p>يمكن الإبلاغ عن الرسالة كبريد عشوائي أو احتيالي في خدمة البريد الإلكتروني.</p>
+                            </div>
+                            
+                            <div class="option not-recommended">
+                                <span class="option-label">غير موصى به: تقديم المعلومات المطلوبة</span>
+                                <p>تقديم المعلومات الشخصية أو المالية استجابة لعروض غير مطلوبة يمكن أن يؤدي إلى الاحتيال وسرقة الهوية.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="expert-tip">
+                            <div class="expert-tip-title">نصيحة الخبير:</div>
+                            <p>تذكر القاعدة الذهبية: إذا كان يبدو جيدًا جدًا لدرجة يصعب تصديقه، فغالبًا ما يكون كذلك. الشركات المشروعة لا تطلب معلومات حساسة عبر البريد الإلكتروني، ولا تجعلك تدفع للحصول على جائزة "مجانية". ابحث عن علامات التحذير مثل الأخطاء الإملائية، وعناوين البريد الإلكتروني المشبوهة، والطلبات العاجلة التي تضغط عليك لاتخاذ إجراء سريع.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="scenario">
+                <div class="scenario-header">
+                    <h3 class="scenario-title">السيناريو 2: احتيال الألعاب عبر الإنترنت</h3>
+                    <p class="scenario-subtitle">منصة ألعاب</p>
+                </div>
+                <div class="scenario-content">
+                    <div class="scenario-description">
+                        <p>نورة، 14 عامًا، تلقت رسالة من لاعب غير معروف في لعبة عبر الإنترنت تلعبها بانتظام. يدعي أنه مسؤول في اللعبة ويعرض عليها عملات افتراضية نادرة مجانًا إذا قدمت له بيانات تسجيل الدخول الخاصة بها "للتحقق من حسابها".</p>
+                    </div>
+                    
+                    <div class="chat-container">
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">Admin_GameMaster:</span>
+                                <span class="message-time">7:30 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>مرحبًا نورة! أنا مسؤول في [اسم اللعبة]. نحن نقدم مكافآت خاصة للاعبين النشطين مثلك. يمكنني إضافة 5000 عملة ذهبية و3 عناصر نادرة إلى حسابك مجانًا!</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble sent">
+                            <div class="message-info">
+                                <span class="message-sender">نورة:</span>
+                                <span class="message-time">7:32 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>حقًا؟ هذا رائع! كيف يمكنني الحصول عليها؟</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">Admin_GameMaster:</span>
+                                <span class="message-time">7:35 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>أحتاج فقط إلى اسم المستخدم وكلمة المرور الخاصين بك للتحقق من حسابك في نظامنا. بمجرد التحقق، سأضيف المكافآت على الفور. هذا عرض خاص لمدة محدودة!</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble sent">
+                            <div class="message-info">
+                                <span class="message-sender">نورة:</span>
+                                <span class="message-time">7:37 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>لست متأكدة... ألا يمكنك إضافة المكافآت مباشرة إلى حسابي دون الحاجة إلى كلمة المرور الخاصة بي؟</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">Admin_GameMaster:</span>
+                                <span class="message-time">7:40 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>للأسف لا. نحتاج إلى التحقق من حسابك أولاً. لا تقلقي، هذا إجراء قياسي. إذا لم ترغبي في ذلك، فسأقدم العرض للاعب آخر. لديك 5 دقائق للرد.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="impact-section">
+                        <h4 class="impact-title">التأثير المحتمل:</h4>
+                        <p>يمكن أن تؤدي عمليات احتيال الألعاب عبر الإنترنت إلى:</p>
+                        <ul>
+                            <li>سرقة حسابات الألعاب وفقدان التقدم والعناصر</li>
+                            <li>سرقة المعلومات الشخصية</li>
+                            <li>الوصول إلى معلومات الدفع المرتبطة بالحساب</li>
+                            <li>استخدام نفس بيانات الاعتماد للوصول إلى حسابات أخرى إذا كانت كلمات المرور متشابهة</li>
+                            <li>استخدام الحساب المخترق لاستهداف الأصدقاء بعمليات احتيال مماثلة</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="response-options">
+                        <h4 class="response-title">خيارات الاستجابة:</h4>
+                        
+                        <div class="options-container">
+                            <div class="option recommended">
+                                <span class="option-label">موصى به: رفض وإبلاغ</span>
+                                <p>يجب على نورة رفض تقديم بيانات تسجيل الدخول الخاصة بها وإنهاء المحادثة.</p>
+                                <p>من المهم الإبلاغ عن المستخدم المشبوه إلى إدارة اللعبة من خلال قنوات الإبلاغ الرسمية.</p>
+                                <p>يمكنها أيضًا حظر المستخدم لمنع المزيد من الاتصالات.</p>
+                            </div>
+                            
+                            <div class="option not-recommended">
+                                <span class="option-label">غير موصى به: مشاركة بيانات الاعتماد</span>
+                                <p>مشاركة بيانات تسجيل الدخول مع أي شخص، حتى لو ادعى أنه مسؤول، يمكن أن تؤدي إلى فقدان السيطرة على الحساب وعواقب أخرى خطيرة.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="expert-tip">
+                            <div class="expert-tip-title">نصيحة الخبير:</div>
+                            <p>المسؤولون الحقيقيون في الألعاب لن يطلبوا أبدًا كلمة المرور الخاصة بك. لديهم بالفعل أدوات للتحقق من الحسابات وإضافة المكافآت دون الحاجة إلى بيانات تسجيل الدخول الخاصة بك. الضغط الزمني ("لديك 5 دقائق") هو تكتيك شائع يستخدمه المحتالون لدفعك لاتخاذ قرارات متسرعة. خذ وقتك دائمًا وفكر بشكل نقدي في أي طلبات غير عادية.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="resources">
+            <h3 class="resources-title">موارد إضافية</h3>
+            <ul class="resources-list">
+                <li><a href="#">دليل التعرف على عمليات الاحتيال عبر الإنترنت</a> - نصائح للتعرف على العلامات التحذيرية</li>
+                <li><a href="#">كيفية الإبلاغ عن عمليات الاحتيال</a> - قنوات الإبلاغ الرسمية للمنصات المختلفة</li>
+                <li><a href="#">حماية معلوماتك الشخصية</a> - استراتيجيات للحفاظ على أمان معلوماتك</li>
+                <li><a href="#">أنواع شائعة من عمليات الاحتيال التي تستهدف الشباب</a> - دليل توعية للمراهقين وأولياء الأمور</li>
+            </ul>
+        </div>
+        
+        <div class="navigation-buttons">
+            <a href="scenario_privacy_violations.html" class="nav-button back-to-home">&larr; السابق: انتهاكات الخصوصية</a>
+            <a href="scenario_family_privacy_boundaries.html" class="nav-button">التالي: حدود خصوصية العائلة &rarr;</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سيناريوهات التصيد - تعليم السمية عبر الإنترنت</title>
+    <style>
+        :root {
+            --primary-color: #4e54c8;
+            --secondary-color: #8f94fb;
+            --accent-color: #ff6b6b;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --text-color: #333;
+            --light-bg: #f9f9f9;
+            --card-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            --transition-speed: 0.3s;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #834d9b, #d04ed6);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 10px;
+        }
+        
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .breadcrumbs {
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .breadcrumbs a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+        }
+        
+        .intro {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .intro-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .scenario-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .scenario {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .scenario-header {
+            background-color: #834d9b;
+            color: white;
+            padding: 15px 20px;
+        }
+        
+        .scenario-title {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+        
+        .scenario-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .scenario-content {
+            padding: 20px;
+        }
+        
+        .scenario-description {
+            margin-bottom: 20px;
+        }
+        
+        .chat-container {
+            background-color: #f5f5f5;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .message-bubble {
+            max-width: 80%;
+            margin-bottom: 15px;
+            padding: 12px 15px;
+            border-radius: 18px;
+            position: relative;
+            font-size: 0.95rem;
+        }
+        
+        .received {
+            background-color: #e5e5ea;
+            align-self: flex-start;
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .sent {
+            background-color: #dcf8c6;
+            align-self: flex-end;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+            text-align: right;
+        }
+        
+        .message-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .message-sender {
+            font-weight: bold;
+            margin-left: 8px;
+        }
+        
+        .message-time {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        
+        .message-content {
+            word-break: break-word;
+        }
+        
+        .impact-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .impact-title {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .response-options {
+            margin-top: 20px;
+        }
+        
+        .response-title {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: background-color var(--transition-speed);
+        }
+        
+        .option:hover {
+            background-color: #e5e5ea;
+        }
+        
+        .option.recommended {
+            border-right: 4px solid var(--success-color);
+        }
+        
+        .option.not-recommended {
+            border-right: 4px solid var(--danger-color);
+        }
+        
+        .option-label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        
+        .expert-tip {
+            background-color: rgba(131, 77, 155, 0.1);
+            border-right: 4px solid #834d9b;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px 0 0 8px;
+        }
+        
+        .expert-tip-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #834d9b;
+        }
+        
+        .resources {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .resources-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .resources-list {
+            list-style-type: none;
+        }
+        
+        .resources-list li {
+            margin-bottom: 10px;
+            padding-right: 20px;
+            position: relative;
+        }
+        
+        .resources-list li::before {
+            content: "•";
+            position: absolute;
+            right: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .resources-list a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .resources-list a:hover {
+            text-decoration: underline;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+        
+        .nav-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color var(--transition-speed);
+        }
+        
+        .nav-button:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .back-to-home {
+            background-color: #6c757d;
+        }
+        
+        .back-to-home:hover {
+            background-color: #5a6268;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .scenario-title {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>سيناريوهات التصيد</h1>
+                <p class="subtitle">فهم وتمييز والاستجابة للتصيد عبر الإنترنت</p>
+            </div>
+        </header>
+        
+        <div class="breadcrumbs">
+            <a href="../index.html">الرئيسية</a> &gt; <a href="../index.html#understand-section">فهم السمية عبر الإنترنت</a> &gt; سيناريوهات التصيد
+        </div>
+        
+        <div class="intro">
+            <h2 class="intro-title">ما هو التصيد؟</h2>
+            <p>التصيد (Trolling) هو سلوك متعمد عبر الإنترنت يهدف إلى إثارة ردود فعل عاطفية سلبية أو إشعال الخلافات من خلال نشر تعليقات استفزازية أو مضللة أو خارجة عن الموضوع. المتصيدون غالبًا ما يستهدفون المناقشات العامة، ومنتديات الألعاب، ومنصات التواصل الاجتماعي بهدف إثارة الاضطراب وتعطيل المحادثات البناءة.</p>
+            <p>توضح السيناريوهات التالية الأشكال الشائعة للتصيد وتقدم إرشادات حول كيفية الاستجابة بفعالية.</p>
+        </div>
+        
+        <div class="scenario-container">
+            <div class="scenario">
+                <div class="scenario-header">
+                    <h3 class="scenario-title">السيناريو 1: الاستفزاز في منتدى للنقاش</h3>
+                    <p class="scenario-subtitle">منتدى مدرسي عبر الإنترنت</p>
+                </div>
+                <div class="scenario-content">
+                    <div class="scenario-description">
+                        <p>يشارك طلاب الصف في منتدى نقاش عبر الإنترنت حول موضوع علمي. أحد المستخدمين، سامي، يقوم باستمرار بنشر تعليقات استفزازية ومضللة عمدًا لتعطيل المناقشة.</p>
+                    </div>
+                    
+                    <div class="chat-container">
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">المعلمة:</span>
+                                <span class="message-time">10:15 ص</span>
+                            </div>
+                            <div class="message-content">
+                                <p>يرجى مناقشة الأدلة العلمية حول تغير المناخ وتأثيره على النظم البيئية.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">فاطمة:</span>
+                                <span class="message-time">10:20 ص</span>
+                            </div>
+                            <div class="message-content">
+                                <p>تشير الدراسات الحديثة إلى أن متوسط درجات الحرارة العالمية قد ارتفع بمقدار 1.1 درجة مئوية منذ العصر ما قبل الصناعي، مما يؤثر على أنماط الطقس والنظم البيئية.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">سامي:</span>
+                                <span class="message-time">10:22 ص</span>
+                            </div>
+                            <div class="message-content">
+                                <p>هههههه تغير المناخ خرافة! الأرض مسطحة أيضًا، أليس كذلك؟ 🤣 أنتم جميعًا مغفلون تصدقون كل ما تقرأونه!</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">محمد:</span>
+                                <span class="message-time">10:25 ص</span>
+                            </div>
+                            <div class="message-content">
+                                <p>هناك إجماع علمي قوي على أن تغير المناخ حقيقي ويرجع في الغالب إلى الأنشطة البشرية. هذه حقائق مدعومة بأبحاث مكثفة.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">سامي:</span>
+                                <span class="message-time">10:27 ص</span>
+                            </div>
+                            <div class="message-content">
+                                <p>واااو، أنت عالم الآن؟ 🙄 أراهن أنك تؤمن أيضًا بأن القمر مصنوع من الجبن! هذا المنتدى مملّ جدًا. أنتم جميعًا تتبعون مثل الأغنام! 🐑🐑🐑</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="impact-section">
+                        <h4 class="impact-title">التأثير المحتمل:</h4>
+                        <p>يمكن أن يؤدي التصيد في المناقشات التعليمية إلى:</p>
+                        <ul>
+                            <li>تعطيل عملية التعلم وإضاعة وقت الفصل</li>
+                            <li>إحباط الطلاب الذين يحاولون المشاركة بجدية</li>
+                            <li>نشر معلومات مضللة</li>
+                            <li>خلق بيئة سلبية تثبط المشاركة</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="response-options">
+                        <h4 class="response-title">خيارات الاستجابة:</h4>
+                        
+                        <div class="options-container">
+                            <div class="option recommended">
+                                <span class="option-label">موصى به: تجاهل وإبلاغ</span>
+                                <p>أفضل استراتيجية هي عدم "إطعام المتصيد" بالاهتمام الذي يسعى إليه. يمكن للطلاب تجاهل تعليقات سامي الاستفزازية والاستمرار في المناقشة الجادة.</p>
+                                <p>يجب إبلاغ المعلم أو مشرف المنتدى عن السلوك المعطل حتى يمكن اتخاذ الإجراءات المناسبة.</p>
+                            </div>
+                            
+                            <div class="option not-recommended">
+                                <span class="option-label">غير موصى به: الرد بغضب</span>
+                                <p>الرد على استفزازات سامي بغضب أو إهانات مضادة سيؤدي فقط إلى تصعيد الموقف وإعطائه بالضبط ما يريد - الاهتمام والفوضى.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="expert-tip">
+                            <div class="expert-tip-title">نصيحة الخبير:</div>
+                            <p>تذكر العبارة الشهيرة: "لا تطعم المتصيدين". المتصيدون يزدهرون على الاهتمام والردود العاطفية. عندما تتجاهلهم وتركز على المناقشة الهادفة، فإنك تحرمهم من الاستجابة التي يسعون إليها، مما يجعل سلوكهم أقل إرضاءً لهم.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="scenario">
+                <div class="scenario-header">
+                    <h3 class="scenario-title">السيناريو 2: التصيد في تعليقات الفيديو</h3>
+                    <p class="scenario-subtitle">منصة مشاركة الفيديو</p>
+                </div>
+                <div class="scenario-content">
+                    <div class="scenario-description">
+                        <p>نشرت لينا، 14 عامًا، فيديو على منصة مشاركة الفيديو تعرض فيه مهاراتها في العزف على البيانو. بدأ أحد المستخدمين، تحت اسم "ناقد_موسيقي_حقيقي"، في نشر تعليقات قاسية ومبالغ فيها مصممة لإثارة ردود فعل عاطفية.</p>
+                    </div>
+                    
+                    <div class="chat-container">
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">لينا:</span>
+                                <span class="message-time">5:30 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>مرحبًا بالجميع! هذا أول فيديو لي أعزف فيه مقطوعة شوبان التي تعلمتها للتو. أتمنى أن تستمتعوا بها! 🎹</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">معجب_بالموسيقى:</span>
+                                <span class="message-time">5:45 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>أداء رائع! يمكنني أن أرى كم تدربت بجد. استمري في العمل الجيد!</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">ناقد_موسيقي_حقيقي:</span>
+                                <span class="message-time">6:00 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>هذا هو أسوأ عزف على البيانو سمعته على الإطلاق! هل يمكن لأحد أن يخبرها أن تتوقف عن تعذيب آذاننا؟ 🤮 شوبان يتقلب في قبره الآن!</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">لينا:</span>
+                                <span class="message-time">6:05 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>شكرًا للتعليقات الإيجابية! أعمل على تحسين أدائي كل يوم.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">ناقد_موسيقي_حقيقي:</span>
+                                <span class="message-time">6:10 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>لماذا تتجاهلين تعليقي؟ هل الحقيقة تؤلمك؟ 😂 أنت لن تصبحي عازفة بيانو أبدًا. توقفي عن إضاعة وقتك ووقتنا!</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="impact-section">
+                        <h4 class="impact-title">التأثير المحتمل:</h4>
+                        <p>يمكن أن يؤدي التصيد في تعليقات الفيديو إلى:</p>
+                        <ul>
+                            <li>تقويض ثقة المبدعين الشباب بأنفسهم</li>
+                            <li>تثبيط المشاركة المستقبلية ومشاركة المواهب</li>
+                            <li>خلق بيئة سلبية في قسم التعليقات</li>
+                            <li>تشتيت الانتباه عن التعليقات البناءة والمفيدة</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="response-options">
+                        <h4 class="response-title">خيارات الاستجابة:</h4>
+                        
+                        <div class="options-container">
+                            <div class="option recommended">
+                                <span class="option-label">موصى به: حظر وتصفية</span>
+                                <p>يمكن للينا استخدام أدوات المنصة لحظر المستخدم المسيء وإزالة تعليقاته من فيديوهاتها.</p>
+                                <p>يمكنها أيضًا تكوين إعدادات التعليقات لتصفية الكلمات المسيئة أو تمكين الاعتدال المسبق للتعليقات.</p>
+                            </div>
+                            
+                            <div class="option not-recommended">
+                                <span class="option-label">غير موصى به: الدخول في جدال</span>
+                                <p>الدخول في جدال مع المتصيد سيؤدي فقط إلى تصعيد الموقف وإعطائه المزيد من الاهتمام. قد يشجع هذا أيضًا آخرين على الانضمام إلى السلوك السلبي.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="expert-tip">
+                            <div class="expert-tip-title">نصيحة الخبير:</div>
+                            <p>ركز على التعليقات الإيجابية والبناءة. يمكن للمبدعين عبر الإنترنت استخدام ميزة "القلب" أو "التثبيت" لإبراز التعليقات الداعمة، مما يساعد على تعزيز بيئة إيجابية ويظهر للمتصيدين أن سلوكهم لن يحصل على منصة.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="resources">
+            <h3 class="resources-title">موارد إضافية</h3>
+            <ul class="resources-list">
+                <li><a href="#">دليل التعامل مع المتصيدين</a> - استراتيجيات للتعرف على التصيد والاستجابة له</li>
+                <li><a href="#">أدوات تصفية المحتوى</a> - برامج وإضافات لتصفية المحتوى السلبي</li>
+                <li><a href="#">المناقشات الإيجابية عبر الإنترنت</a> - نصائح للحفاظ على المناقشات البناءة</li>
+                <li><a href="#">الصحة النفسية والتفاعلات عبر الإنترنت</a> - موارد للتعامل مع التأثير العاطفي للتفاعلات السلبية</li>
+            </ul>
+        </div>
+        
+        <div class="navigation-buttons">
+            <a href="scenario_doxing.html" class="nav-button back-to-home">&larr; السابق: كشف المعلومات الشخصية</a>
+            <a href="scenario_hate_speech.html" class="nav-button">التالي: خطاب الكراهية &rarr;</a>
+        </div>
+    </div>
+</body>
+</html>

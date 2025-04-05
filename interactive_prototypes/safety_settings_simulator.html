@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محاكي إعدادات الأمان</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+            direction: rtl;
+        }
+        
+        header {
+            background-color: #3f51b5;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .intro {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .platform-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            justify-content: center;
+        }
+        
+        .platform-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            width: 150px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .platform-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .platform-card.active {
+            border-color: #3f51b5;
+            background-color: #f0f4ff;
+        }
+        
+        .platform-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .platform-name {
+            font-weight: bold;
+        }
+        
+        .settings-container {
+            display: none;
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .settings-container.active {
+            display: block;
+        }
+        
+        .settings-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .settings-icon {
+            font-size: 2rem;
+            margin-left: 1rem;
+            color: #3f51b5;
+        }
+        
+        .settings-title {
+            margin: 0;
+            color: #3f51b5;
+        }
+        
+        .settings-section {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1.5rem;
+        }
+        
+        .settings-section:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        
+        .settings-section h3 {
+            color: #3f51b5;
+            margin-top: 0;
+        }
+        
+        .setting-item {
+            margin-bottom: 1.5rem;
+        }
+        
+        .setting-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .setting-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .setting-name {
+            font-weight: bold;
+        }
+        
+        .setting-toggle {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        
+        .setting-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: #3f51b5;
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+        
+        .setting-description {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .setting-dropdown {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: white;
+            font-size: 1rem;
+        }
+        
+        .before-after {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .before, .after {
+            flex: 1;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+        
+        .before h3, .after h3 {
+            margin-top: 0;
+            color: #3f51b5;
+            display: flex;
+            align-items: center;
+        }
+        
+        .before h3 span, .after h3 span {
+            margin-left: 0.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .before {
+            border-right: 4px solid #f44336;
+        }
+        
+        .after {
+            border-right: 4px solid #4CAF50;
+        }
+        
+        .security-level {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .security-title {
+            color: #3f51b5;
+            margin-top: 0;
+        }
+        
+        .security-meter {
+            height: 30px;
+            background-color: #f0f0f0;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .security-fill {
+            height: 100%;
+            background-color: #4CAF50;
+            width: 20%;
+            transition: width 0.5s;
+        }
+        
+        .security-badges {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .badge {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 1rem;
+            width: 120px;
+            text-align: center;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+        
+        .badge.earned {
+            opacity: 1;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .badge-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .badge-name {
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        
+        .nav-button {
+            background-color: #3f51b5;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-button:hover {
+            background-color: #303f9f;
+        }
+        
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .platform-selector {
+                justify-content: center;
+            }
+            
+            .platform-card {
+                width: calc(33.333% - 1rem);
+                min-width: 100px;
+            }
+            
+            .before-after {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>محاكي إعدادات الأمان</h1>
+        <div class="subtitle">تعلم كيفية تكوين إعدادات الخصوصية والأمان على المنصات الشائعة</div>
+    </header>
+    
+    <div class="container">
+        <div class="intro">
+            <h2>حماية نفسك عبر الإنترنت</h2>
+            <p>تعد إعدادات الخصوصية والأمان أدوات قوية للحماية من السمية عبر الإنترنت. يساعدك هذا المحاكي على تعلم كيفية تكوين هذه الإعدادات على منصات التواصل الاجتماعي الشائعة في منطقة الخليج العربي.</p>
+            <p>اختر منصة من أدناه للبدء، ثم استكشف الإعدادات المختلفة وتأثيرها على تجربتك عبر الإنترنت.</p>
+        </div>
+        
+        <div class="platform-selector">
+            <div class="platform-card" onclick="selectPlatform('instagram')">
+                <div class="platform-icon">📷</div>
+                <div class="platform-name">انستغرام</div>
+            </div>
+            
+            <div class="platform-card" onclick="selectPlatform('tiktok')">
+                <div class="platform-icon">🎵</div>
+                <div class="platform-name">تيك توك</div>
+            </div>
+            
+            <div class="platform-card" onclick="selectPlatform('snapchat')">
+                <div class="platform-icon">👻</div>
+                <div class="platform-name">سناب شات</div>
+            </div>
+            
+            <div class="platform-card" onclick="selectPlatform('twitter')">
+                <div class="platform-icon">🐦</div>
+                <div class="platform-name">تويتر/X</div>
+            </div>
+            
+            <div class="platform-card" onclick="selectPlatform('discord')">
+                <div class="platform-icon">💬</div>
+                <div class="platform-name">ديسكورد</div>
+            </div>
+            
+            <div class="platform-card" onclick="selectPlatform('facebook')">
+                <div class="platform-icon">👥</div>
+                <div class="platform-name">فيسبوك</div>
+            </div>
+            
+            <div class="platform-card" onclick="selectPlatform('whatsapp')">
+                <div class="platform-icon">📱</div>
+                <div class="platform-name">واتساب</div>
+            </div>
+            
+            <div class="platform-card" onclick="selectPlatform('telegram')">
+                <div class="platform-icon">✈️</div>
+                <div class="platform-name">تيليجرام</div>
+            </div>
+            
+            <div class="platform-card" onclick="selectPlatform('twitch')">
+                <div class="platform-icon">🎮</div>
+                <div class="platform-name">تويتش</div>
+            </div>
+        </div>
+        
+        <!-- Instagram Settings -->
+        <div id="instagram-settings" class="settings-container">
+            <div class="settings-header">
+                <div class="settings-icon">📷</div>
+                <h2 class="settings-title">إعدادات الخصوصية والأمان في انستغرام</h2>
+            </div>
+            
+            <div class="settings-section">
+                <h3>خصوصية الحساب</h3>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">حساب خاص</div>
+                        <label class="setting-toggle">
+                            <input type="checkbox" onchange="updateSecurityLevel()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-description">عند تفعيل هذا الخيار، سيتمكن فقط الأشخاص الذين توافق عليهم من رؤية منشوراتك وقصصك.</div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">الموافقة على علامات الصور</div>
+                        <label class="setting-toggle">
+                            <input type="checkbox" onchange="updateSecurityLevel()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-description">اختر ما إذا كنت تريد مراجعة المنشورات التي تمت الإشارة إليك فيها قبل ظهورها في ملفك الشخصي.</div>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3>التحكم في التفاعل</h3>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">تقييد التعليقات</div>
+                        <select class="setting-dropdown" onchange="updateSecurityLevel()">
+                            <option value="everyone">الجميع</option>
+                            <option value="following">الأشخاص الذين أتابعهم</option>
+                            <option value="followers">متابعيني</option>
+                            <option value="both">متابعيني والأشخاص الذين أتابعهم</option>
+                        </select>
+                    </div>
+                    <div class="setting-description">تحكم في من يمكنه التعليق على منشوراتك.</div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">تصفية التعليقات المسيئة</div>
+                        <label class="setting-toggle">
+                            <input type="checkbox" onchange="updateSecurityLevel()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-description">إخفاء التعليقات التي تحتوي على كلمات أو عبارات مسيئة تلقائياً.</div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">كلمات مخصصة للتصفية</div>
+                        <label class="setting-toggle">
+                            <input type="checkbox" onchange="updateSecurityLevel()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-description">أضف كلمات أو عبارات محددة لا ترغب في رؤيتها في التعليقات.</div>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3>الرسائل والاتصالات</h3>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">طلبات الرسائل</div>
+                        <select class="setting-dropdown" onchange="updateSecurityLevel()">
+                            <option value="everyone">الجميع</option>
+                            <option value="following">الأشخاص الذين أتابعهم فقط</option>
+                        </select>
+                    </div>
+                    <div class="setting-description">تحكم في من يمكنه إرسال رسائل إليك.</div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">تنبيهات الرسائل الجديدة</div>
+                        <label class="setting-toggle">
+                            <input type="checkbox" onchange="updateSecurityLevel()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-description">تلقي إشعارات عندما يرسل لك شخص ما رسالة جديدة.</div>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3>الأمان</h3>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">المصادقة الثنائية</div>
+                        <label class="setting-toggle">
+                            <input type="checkbox" onchange="updateSecurityLevel()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-description">أضف طبقة إضافية من الأمان لحسابك عن طريق طلب رمز إضافي عند تسجيل الدخول.</div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">تطبيقات مصرح بها</div>
+                        <label class="setting-toggle">
+                            <input type="checkbox" onchange="updateSecurityLevel()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-description">مراجعة وإدارة التطبيقات والمواقع التي لديها إمكانية الوصول إلى حسابك.</div>
+                </div>
+            </div>
+            
+            <div class="before-after">
+                <div class="before">
+                    <h3><span>⚠️</span> قبل تطبيق إعدادات الأمان</h3>
+                    <p>- يمكن لأي شخص رؤية منشوراتك وقصصك</p>
+                    <p>- يمكن لأي شخص التعليق على منشوراتك</p>
+                    <p>- يمكن لأي شخص الإشارة إليك في المنشورات دون موافقتك</p>
+                    <p>- يمكن لأي شخص إرسال رسائل إليك</p>
+                    <p>- حسابك معرض للاختراق بسبب عدم تفعيل المصادقة الثنائية</p>
+                </div>
+                
+                <div class="after">
+                    <h3><span>✅</span> بعد تطبيق إعدادات الأمان</h3>
+                    <p>- فقط الأشخاص الذين توافق عليهم يمكنهم رؤية محتواك</p>
+                    <p>- تتحكم في من يمكنه التعليق على منشوراتك</p>
+                    <p>- تتم تصفية التعليقات المسيئة تلقائياً</p>
+                    <p>- تتحكم في من يمكنه الإشارة إليك في المنشورات</p>
+                    <p>- فقط الأشخاص الذين تتابعهم يمكنهم إرسال رسائل إليك</p>
+                    <p>- حسابك محمي بطبقة إضافية من الأمان</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- TikTok Settings -->
+        <div id="tiktok-settings" class="settings-container">
+            <div class="settings-header">
+                <div class="settings-icon">🎵</div>
+                <h2 class="settings-title">إعدادات الخصوصية والأمان في تيك توك</h2>
+            </div>
+            
+            <div class="settings-section">
+                <h3>خصوصية الحساب</h3>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">حساب خاص</div>
+                        <label class="setting-toggle">
+                            <input type="checkbox" onchange="updateSecurityLevel()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-description">عند تفعيل هذا الخيار، سيتمكن فقط المتابعون المعتمدون من رؤية مقاطع الفيديو الخاصة بك.</div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">من يمكنه مشاهدة مقاطع الفيديو الخاصة بك</div>
+                        <select class="setting-dropdown" onchange="updateSecurityLevel()">
+                            <option value="everyone">الجميع</option>
+                            <option value="friends">الأصدقاء</option>
+                            <option value="only_me">أنا فقط</option>
+                        </select>
+                    </div>
+                    <div class="setting-description">تحكم في من يمكنه مشاهدة المحتوى الذي تنشره.</div>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3>التفاعلات</h3>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">من يمكنه التعليق على مقاطع الفيديو الخاصة بك</div>
+                        <select class="setting-dropdown" onchange="updateSecurityLevel()">
+                            <option value="everyone">الجميع</option>
+                            <option value="friends">الأصدقاء</option>
+                            <option value="no_one">لا أحد</option>
+                        </select>
+                    </div>
+                    <div class="setting-description">تحكم في من يمكنه التعليق على المحتوى الخاص بك.</div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">تصفية التعليقات</div>
+                        <label class="setting-toggle">
+                            <input type="checkbox" onchange="updateSecurityLevel()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-description">تصفية التعليقات التي تحتوي على كلمات رئيسية محددة.</div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">من يمكنه الدويت مع مقاطع الفيديو الخاصة بك</div>
+                        <select class="setting-dropdown" onchange="updateSecurityLevel()">
+                            <option value="everyone">الجميع</option>
+                            <option value="friends">الأصدقاء</option>
+                            <option value="no_one">لا أحد</option>
+                        </select>
+                    </div>
+                    <div class="setting-description">تحكم في من يمكنه استخدام مقاطع الفيديو الخاصة بك في الدويتات.</div>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3>الرسائل والاتصالات</h3>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">من يمكنه إرسال رسائل إليك</div>
+                        <select class="setting-dropdown" onchange="updateSecurityLevel()">
+                            <option value="everyone">الجميع</option>
+                            <option value="friends">الأصدقاء</option>
+                            <option value="no_one">لا أحد</option>
+                        </select>
+                    </div>
+                    <div class="setting-description">تحكم في من يمكنه التواصل معك عبر الرسائل المباشرة.</div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">من يمكنه الدويت معك</div>
+                        <select class="setting-dropdown" onchange="updateSecurityLevel()">
+                            <option value="everyone">الجميع</option>
+                            <option value="friends">الأصدقاء</option>
+                            <option value="no_one">لا أحد</option>
+                        </select>
+                    </div>
+                    <div class="setting-description">تحكم في من يمكنه إنشاء دويتات معك.</div>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3>الأمان</h3>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">وضع الأمان للعائلة</div>
+                        <label class="setting-toggle">
+                            <input type="checkbox" onchange="updateSecurityLevel()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-description">تفعيل ميزات إضافية للأمان والخصوصية للمستخدمين الأصغر سناً.</div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">المصادقة الثنائية</div>
+                        <label class="setting-toggle">
+                            <input type="checkbox" onchange="updateSecurityLevel()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-description">أضف طبقة إضافية من الأمان لحسابك عن طريق طلب رمز إضافي عند تسجيل الدخول.</div>
+                </div>
+            </div>
+            
+            <div class="before-after">
+                <div class="before">
+                    <h3><span>⚠️</span> قبل تطبيق إعدادات الأمان</h3>
+                    <p>- يمكن لأي شخص مشاهدة مقاطع الفيديو الخاصة بك</p>
+                    <p>- يمكن لأي شخص التعليق على مقاطع الفيديو الخاصة بك</p>
+                    <p>- يمكن لأي شخص استخدام مقاطع الفيديو الخاصة بك في الدويتات</p>
+                    <p>- يمكن لأي شخص إرسال رسائل إليك</p>
+                    <p>- قد يتعرض حسابك لمحتوى غير مناسب</p>
+                </div>
+                
+                <div class="after">
+                    <h3><span>✅</span> بعد تطبيق إعدادات الأمان</h3>
+                    <p>- فقط المتابعون المعتمدون يمكنهم مشاهدة مقاطع الفيديو الخاصة بك</p>
+                    <p>- فقط الأصدقاء يمكنهم التعليق على المحتوى الخاص بك</p>
+                    <p>- يتم تصفية التعليقات المسيئة</p>
+                    <p>- فقط الأصدقاء يمكنهم إرسال رسائل إليك</p>
+                    <p>- حسابك محمي بوضع الأمان للعائلة والمصادقة الثنائية</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Facebook Settings -->
+        <div id="facebook-settings" class="settings-container">
+            <div class="settings-header">
+                <div class="settings-icon">👥</div>
+                <h2 class="settings-title">إعدادات الخصوصية والأمان في فيسبوك</h2>
+            </div>
+            
+            <div class="settings-section">
+                <h3>خصوصية المنشورات</h3>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">من يمكنه رؤية منشوراتك المستقبلية</div>
+                        <select class="setting-dropdown" onchange="updateSecurityLevel()">
+                            <option value="public">عام</option>
+                            <option value="friends">الأصدقاء</option>
+                            <option value="specific">أصدقاء محددون</option>
+                            <option value="only_me">أنا فقط</option>
+                        </select>
+                    </div>
+                    <div class="setting-description">تحكم في من يمكنه رؤية المحتوى الذي تنشره افتراضياً.</div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">تقييد المنشورات السابقة</div>
+                        <label class="setting-toggle">
+                            <input type="checkbox" onchange="updateSecurityLevel()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-description">تغيير إعدادات الخصوصية للمنشورات السابقة من "عام" إلى "الأصدقاء فقط".</div>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3>معلومات الملف الشخصي</h3>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">من يمكنه رؤية قائمة أصدقائك</div>
+                        <select class="setting-dropdown" onchange="updateSecurityLevel()">
+                            <option value="public">عام</option>
+                            <option value="friends">الأصدقاء</option>
+                            <option value="only_me">أنا فقط</option>
+                        </select>
+                    </div>
+                    <div class="setting-description">تحكم في من يمكنه رؤية الأشخاص الذين أنت متصل بهم.</div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">من يمكنه البحث عنك باستخدام رقم هاتفك أو بريدك الإلكتروني</div>
+                        <select class="setting-dropdown" onchange="updateSecurityLevel()">
+                            <option value="everyone">الجميع</option>
+                            <option value="friends">الأصدقاء</option>
+                            <option value="friends_of_friends">أصدقاء الأصدقاء</option>
+                        </select>
+                    </div>
+                    <div class="setting-description">تحكم في كيفية العثور عليك باستخدام معلومات الاتصال الخاصة بك.</div>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3>طلبات الصداقة والمراسلة</h3>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">من يمكنه إرسال طلبات صداقة إليك</div>
+                        <select class="setting-dropdown" onchange="updateSecurityLevel()">
+                            <option value="everyone">الجميع</option>
+                            <option value="friends_of_friends">أصدقاء الأصدقاء</option>
+                        </select>
+                    </div>
+                    <div class="setting-description">تحكم في من يمكنه إرسال طلبات صداقة إليك.</div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">تصفية الرسائل</div>
+                        <label class="setting-toggle">
+                            <input type="checkbox" onchange="updateSecurityLevel()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-description">نقل الرسائل من الأشخاص الذين قد لا تعرفهم إلى مجلد طلبات الرسائل.</div>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3>الأمان</h3>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">المصادقة الثنائية</div>
+                        <label class="setting-toggle">
+                            <input type="checkbox" onchange="updateSecurityLevel()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-description">أضف طبقة إضافية من الأمان لحسابك عن طريق طلب رمز إضافي عند تسجيل الدخول.</div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">تنبيهات تسجيل الدخول</div>
+                        <label class="setting-toggle">
+                            <input type="checkbox" onchange="updateSecurityLevel()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-description">تلقي تنبيهات عندما يتم تسجيل الدخول إلى حسابك من جهاز أو موقع غير معروف.</div>
+                </div>
+            </div>
+            
+            <div class="before-after">
+                <div class="before">
+                    <h3><span>⚠️</span> قبل تطبيق إعدادات الأمان</h3>
+                    <p>- منشوراتك مرئية للجميع</p>
+                    <p>- قائمة أصدقائك مرئية للجميع</p>
+                    <p>- يمكن لأي شخص العثور عليك باستخدام رقم هاتفك أو بريدك الإلكتروني</p>
+                    <p>- يمكن لأي شخص إرسال طلبات صداقة ورسائل إليك</p>
+                    <p>- حسابك معرض للاختراق بسبب عدم تفعيل المصادقة الثنائية</p>
+                </div>
+                
+                <div class="after">
+                    <h3><span>✅</span> بعد تطبيق إعدادات الأمان</h3>
+                    <p>- منشوراتك مرئية للأصدقاء فقط</p>
+                    <p>- قائمة أصدقائك مرئية لك فقط</p>
+                    <p>- فقط أصدقاء الأصدقاء يمكنهم العثور عليك باستخدام معلومات الاتصال</p>
+                    <p>- فقط أصدقاء الأصدقاء يمكنهم إرسال طلبات صداقة إليك</p>
+                    <p>- يتم تصفية الرسائل من الغرباء</p>
+                    <p>- حسابك محمي بالمصادقة الثنائية وتنبيهات تسجيل الدخول</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- WhatsApp Settings -->
+        <div id="whatsapp-settings" class="settings-container">
+            <div class="settings-header">
+                <div class="settings-icon">📱</div>
+                <h2 class="settings-title">إعدادات الخصوصية والأمان في واتساب</h2>
+            </div>
+            
+            <div class="settings-section">
+                <h3>خصوصية الملف الشخصي</h3>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">من يمكنه رؤية صورة ملفك الشخصي</div>
+                        <select class="setting-dropdown" onchange="updateSecurityLevel()">
+                            <option value="everyone">الجميع</option>
+                            <option value="contacts">جهات الاتصال</option>
+                            <option value="nobody">لا أحد</option>
+                        </select>
+                    </div>
+                    <div class="setting-description">تحكم في من يمكنه رؤية صورة ملفك الشخصي.</div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">من يمكنه رؤية معلومات حالتك</div>
+                        <select class="setting-dropdown" onchange="updateSecurityLevel()">
+                            <option value="everyone">الجميع</option>
+                            <option value="contacts">جهات الاتصال</option>
+                            <option value="nobody">لا أحد</option>
+                        </select>
+                    </div>
+                    <div class="setting-description">تحكم في من يمكنه رؤية تحديثات حالتك.</div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">من يمكنه رؤية آخر ظهور لك</div>
+                        <select class="setting-dropdown" onchange="updateSecurityLevel()">
+                            <option value="everyone">الجميع</option>
+                            <option value="contacts">جهات الاتصال</option>
+                            <option value="nobody">لا أحد</option>
+                        </select>
+                    </div>
+                    <div class="setting-description">تحكم في من يمكنه رؤية آخر مرة كنت متصلاً بالإنترنت.</div>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3>المجموعات والرسائل</h3>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">من يمكنه إضافتك إلى المجموعات</div>
+                        <select class="setting-dropdown" onchange="updateSecurityLevel()">
+                            <option value="everyone">الجميع</option>
+                            <option value="contacts">جهات الاتصال</option>
+                            <option value="selected">جهات اتصال محددة</option>
+                        </select>
+                    </div>
+                    <div class="setting-description">تحكم في من يمكنه إضافتك إلى مجموعات واتساب.</div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">قراءة الرسائل</div>
+                        <label class="setting-toggle">
+                            <input type="checkbox" onchange="updateSecurityLevel()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-description">إيقاف تشغيل إشعارات القراءة (العلامات الزرقاء) لرسائلك.</div>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3>الأمان</h3>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">التحقق بخطوتين</div>
+                        <label class="setting-toggle">
+                            <input type="checkbox" onchange="updateSecurityLevel()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-description">أضف طبقة إضافية من الأمان لحسابك عن طريق طلب رمز PIN عند إعادة تسجيل رقم هاتفك.</div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">قفل الشاشة</div>
+                        <label class="setting-toggle">
+                            <input type="checkbox" onchange="updateSecurityLevel()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-description">استخدم بصمة الإصبع أو Face ID أو رمز PIN لفتح تطبيق واتساب.</div>
+                </div>
+            </div>
+            
+            <div class="before-after">
+                <div class="before">
+                    <h3><span>⚠️</span> قبل تطبيق إعدادات الأمان</h3>
+                    <p>- يمكن لأي شخص رؤية صورة ملفك الشخصي ومعلومات حالتك</p>
+                    <p>- يمكن لأي شخص رؤية آخر ظهور لك</p>
+                    <p>- يمكن لأي شخص إضافتك إلى مجموعات</p>
+                    <p>- يمكن للآخرين معرفة متى قرأت رسائلهم</p>
+                    <p>- حسابك معرض للخطر إذا تم الوصول إلى هاتفك</p>
+                </div>
+                
+                <div class="after">
+                    <h3><span>✅</span> بعد تطبيق إعدادات الأمان</h3>
+                    <p>- فقط جهات الاتصال يمكنهم رؤية صورة ملفك الشخصي ومعلومات حالتك</p>
+                    <p>- لا أحد يمكنه رؤية آخر ظهور لك</p>
+                    <p>- فقط جهات اتصال محددة يمكنهم إضافتك إلى مجموعات</p>
+                    <p>- لا يمكن للآخرين معرفة متى قرأت رسائلهم</p>
+                    <p>- حسابك محمي بالتحقق بخطوتين وقفل الشاشة</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Telegram Settings -->
+        <div id="telegram-settings" class="settings-container">
+            <div class="settings-header">
+                <div class="settings-icon">✈️</div>
+                <h2 class="settings-title">إعدادات الخصوصية والأمان في تيليجرام</h2>
+            </div>
+            
+            <div class="settings-section">
+                <h3>خصوصية الرسائل</h3>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">من يمكنه رؤية رقم هاتفي</div>
+                        <select class="setting-dropdown" onchange="updateSecurityLevel()">
+                            <option value="everyone">الجميع</option>
+                            <option value="contacts">جهات الاتصال</option>
+                            <option value="nobody">لا أحد</option>
+                        </select>
+                    </div>
+                    <div class="setting-description">تحكم في من يمكنه رؤية رقم هاتفك المرتبط بحساب تيليجرام.</div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">من يمكنه رؤية آخر ظهور لي</div>
+                        <select class="setting-dropdown" onchange="updateSecurityLevel()">
+                            <option value="everyone">الجميع</option>
+                            <option value="contacts">جهات الاتصال</option>
+                            <option value="nobody">لا أحد</option>
+                        </select>
+                    </div>
+                    <div class="setting-description">تحكم في من يمكنه رؤية آخر مرة كنت متصلاً بالإنترنت.</div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">المحادثات السرية</div>
+                        <label class="setting-toggle">
+                            <input type="checkbox" onchange="updateSecurityLevel()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-description">استخدم المحادثات السرية للرسائل المشفرة من طرف إلى طرف التي لا يتم تخزينها على خوادم تيليجرام.</div>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3>المجموعات والقنوات</h3>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">من يمكنه إضافتي إلى المجموعات</div>
+                        <select class="setting-dropdown" onchange="updateSecurityLevel()">
+                            <option value="everyone">الجميع</option>
+                            <option value="contacts">جهات الاتصال</option>
+                        </select>
+                    </div>
+                    <div class="setting-description">تحكم في من يمكنه إضافتك إلى مجموعات تيليجرام.</div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">توجيه الرسائل</div>
+                        <select class="setting-dropdown" onchange="updateSecurityLevel()">
+                            <option value="everyone">السماح للجميع</option>
+                            <option value="contacts">السماح لجهات الاتصال فقط</option>
+                            <option value="nobody">عدم السماح</option>
+                        </select>
+                    </div>
+                    <div class="setting-description">تحكم في من يمكنه توجيه رسائلك إلى محادثات أخرى.</div>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3>الأمان</h3>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">التحقق بخطوتين</div>
+                        <label class="setting-toggle">
+                            <input type="checkbox" onchange="updateSecurityLevel()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-description">أضف كلمة مرور إضافية لحسابك بالإضافة إلى رمز SMS.</div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">جلسات نشطة</div>
+                        <label class="setting-toggle">
+                            <input type="checkbox" onchange="updateSecurityLevel()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-description">مراجعة وإنهاء جلسات تيليجرام النشطة على أجهزة أخرى.</div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-header">
+                        <div class="setting-name">التدمير الذاتي للحساب</div>
+                        <select class="setting-dropdown" onchange="updateSecurityLevel()">
+                            <option value="1_month">1 شهر من عدم النشاط</option>
+                            <option value="3_months">3 أشهر من عدم النشاط</option>
+                            <option value="6_months">6 أشهر من عدم النشاط</option>
+                            <option value="1_year">1 سنة من عدم النشاط</option>
+                        </select>
+                    </div>
+                    <div class="setting-description">تعيين فترة زمنية يتم بعدها حذف حسابك تلقائياً إذا لم تقم بتسجيل الدخول.</div>
+                </div>
+            </div>
+            
+            <div class="before-after">
+                <div class="before">
+                    <h3><span>⚠️</span> قبل تطبيق إعدادات الأمان</h3>
+                    <p>- يمكن لأي شخص رؤية رقم هاتفك وآخر ظهور لك</p>
+                    <p>- رسائلك العادية غير مشفرة من طرف إلى طرف</p>
+                    <p>- يمكن لأي شخص إضافتك إلى المجموعات</p>
+                    <p>- يمكن لأي شخص توجيه رسائلك</p>
+                    <p>- حسابك معرض للخطر إذا تم الوصول إلى رمز SMS الخاص بك</p>
+                </div>
+                
+                <div class="after">
+                    <h3><span>✅</span> بعد تطبيق إعدادات الأمان</h3>
+                    <p>- فقط جهات الاتصال يمكنهم رؤية رقم هاتفك</p>
+                    <p>- لا أحد يمكنه رؤية آخر ظهور لك</p>
+                    <p>- تستخدم المحادثات السرية للرسائل الحساسة</p>
+                    <p>- فقط جهات الاتصال يمكنهم إضافتك إلى المجموعات</p>
+                    <p>- لا يمكن توجيه رسائلك</p>
+                    <p>- حسابك محمي بالتحقق بخطوتين</p>
+                    <p>- تتحكم في جلسات تيليجرام النشطة</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Security Level Meter -->
+        <div class="security-level">
+            <h2 class="security-title">مستوى الأمان والخصوصية الخاص بك</h2>
+            <div class="security-meter">
+                <div id="security-fill" class="security-fill" style="width: 20%;"></div>
+            </div>
+            <p id="security-status">مستوى الأمان الحالي: منخفض (20%)</p>
+            
+            <div class="security-badges">
+                <div id="badge-basic" class="badge earned">
+                    <div class="badge-icon">🔰</div>
+                    <div class="badge-name">أساسيات الأمان</div>
+                </div>
+                
+                <div id="badge-privacy" class="badge">
+                    <div class="badge-icon">🔒</div>
+                    <div class="badge-name">حامي الخصوصية</div>
+                </div>
+                
+                <div id="badge-communication" class="badge">
+                    <div class="badge-icon">💬</div>
+                    <div class="badge-name">اتصالات آمنة</div>
+                </div>
+                
+                <div id="badge-advanced" class="badge">
+                    <div class="badge-icon">🛡️</div>
+                    <div class="badge-name">خبير الأمان</div>
+                </div>
+                
+                <div id="badge-master" class="badge">
+                    <div class="badge-icon">👑</div>
+                    <div class="badge-name">سيد الأمان الرقمي</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <a href="index.html" class="nav-button">العودة إلى الصفحة الرئيسية</a>
+            <a href="response_decision_tree.html" class="nav-button">استكشاف شجرة قرارات الاستجابة</a>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2025 - جميع الحقوق محفوظة</p>
+    </footer>
+    
+    <script>
+        // Current security level
+        let securityLevel = 20;
+        
+        // Function to select a platform
+        function selectPlatform(platform) {
+            // Hide all platform settings
+            const allSettings = document.querySelectorAll('.settings-container');
+            allSettings.forEach(setting => {
+                setting.classList.remove('active');
+            });
+            
+            // Show the selected platform settings
+            const selectedSettings = document.getElementById(`${platform}-settings`);
+            if (selectedSettings) {
+                selectedSettings.classList.add('active');
+                
+                // Update platform cards
+                const allCards = document.querySelectorAll('.platform-card');
+                allCards.forEach(card => {
+                    card.classList.remove('active');
+                });
+                
+                const cards = document.querySelectorAll('.platform-card');
+                cards.forEach(card => {
+                    if (card.querySelector('.platform-name').textContent.toLowerCase().includes(platform)) {
+                        card.classList.add('active');
+                    }
+                });
+                
+                // Scroll to the settings
+                selectedSettings.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+        
+        // Function to update security level
+        function updateSecurityLevel() {
+            // Count checked toggles
+            const toggles = document.querySelectorAll('.setting-toggle input:checked');
+            const totalToggles = document.querySelectorAll('.setting-toggle input');
+            
+            // Count dropdown selections that are not the first option
+            const dropdowns = document.querySelectorAll('.setting-dropdown');
+            let secureDropdowns = 0;
+            dropdowns.forEach(dropdown => {
+                if (dropdown.selectedIndex > 0) {
+                    secureDropdowns++;
+                }
+            });
+            
+            // Calculate security level (simplified for demo)
+            const totalSettings = totalToggles.length + dropdowns.length;
+            const secureSettings = toggles.length + secureDropdowns;
+            securityLevel = Math.min(100, Math.max(20, Math.round((secureSettings / totalSettings) * 100)));
+            
+            // Update security meter
+            const securityFill = document.getElementById('security-fill');
+            securityFill.style.width = `${securityLevel}%`;
+            
+            // Update color based on level
+            if (securityLevel < 40) {
+                securityFill.style.backgroundColor = '#f44336'; // Red
+            } else if (securityLevel < 70) {
+                securityFill.style.backgroundColor = '#ff9800'; // Orange
+            } else {
+                securityFill.style.backgroundColor = '#4CAF50'; // Green
+            }
+            
+            // Update status text
+            const securityStatus = document.getElementById('security-status');
+            let levelText = 'منخفض';
+            if (securityLevel >= 70) {
+                levelText = 'مرتفع';
+            } else if (securityLevel >= 40) {
+                levelText = 'متوسط';
+            }
+            securityStatus.textContent = `مستوى الأمان الحالي: ${levelText} (${securityLevel}%)`;
+            
+            // Update badges
+            updateBadges();
+        }
+        
+        // Function to update badges
+        function updateBadges() {
+            // Basic badge (always earned)
+            document.getElementById('badge-basic').classList.add('earned');
+            
+            // Privacy badge (40%+)
+            if (securityLevel >= 40) {
+                document.getElementById('badge-privacy').classList.add('earned');
+            } else {
+                document.getElementById('badge-privacy').classList.remove('earned');
+            }
+            
+            // Communication badge (60%+)
+            if (securityLevel >= 60) {
+                document.getElementById('badge-communication').classList.add('earned');
+            } else {
+                document.getElementById('badge-communication').classList.remove('earned');
+            }
+            
+            // Advanced badge (80%+)
+            if (securityLevel >= 80) {
+                document.getElementById('badge-advanced').classList.add('earned');
+            } else {
+                document.getElementById('badge-advanced').classList.remove('earned');
+            }
+            
+            // Master badge (95%+)
+            if (securityLevel >= 95) {
+                document.getElementById('badge-master').classList.add('earned');
+            } else {
+                document.getElementById('badge-master').classList.remove('earned');
+            }
+        }
+        
+        // Initialize with Instagram selected
+        window.onload = function() {
+            selectPlatform('instagram');
+            updateSecurityLevel();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سيناريوهات انتحال الشخصية - تعليم السمية عبر الإنترنت</title>
+    <style>
+        :root {
+            --primary-color: #4e54c8;
+            --secondary-color: #8f94fb;
+            --accent-color: #ff6b6b;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --text-color: #333;
+            --light-bg: #f9f9f9;
+            --card-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            --transition-speed: 0.3s;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #2193b0, #6dd5ed);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 10px;
+        }
+        
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .breadcrumbs {
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .breadcrumbs a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+        }
+        
+        .intro {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .intro-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .scenario-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .scenario {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .scenario-header {
+            background-color: #2193b0;
+            color: white;
+            padding: 15px 20px;
+        }
+        
+        .scenario-title {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+        
+        .scenario-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .scenario-content {
+            padding: 20px;
+        }
+        
+        .scenario-description {
+            margin-bottom: 20px;
+        }
+        
+        .chat-container {
+            background-color: #f5f5f5;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .message-bubble {
+            max-width: 80%;
+            margin-bottom: 15px;
+            padding: 12px 15px;
+            border-radius: 18px;
+            position: relative;
+            font-size: 0.95rem;
+        }
+        
+        .received {
+            background-color: #e5e5ea;
+            align-self: flex-start;
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .sent {
+            background-color: #dcf8c6;
+            align-self: flex-end;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+            text-align: right;
+        }
+        
+        .message-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .message-sender {
+            font-weight: bold;
+            margin-left: 8px;
+        }
+        
+        .message-time {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        
+        .message-content {
+            word-break: break-word;
+        }
+        
+        .impact-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .impact-title {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .response-options {
+            margin-top: 20px;
+        }
+        
+        .response-title {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: background-color var(--transition-speed);
+        }
+        
+        .option:hover {
+            background-color: #e5e5ea;
+        }
+        
+        .option.recommended {
+            border-right: 4px solid var(--success-color);
+        }
+        
+        .option.not-recommended {
+            border-right: 4px solid var(--danger-color);
+        }
+        
+        .option-label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        
+        .expert-tip {
+            background-color: rgba(33, 147, 176, 0.1);
+            border-right: 4px solid #2193b0;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px 0 0 8px;
+        }
+        
+        .expert-tip-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2193b0;
+        }
+        
+        .resources {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .resources-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .resources-list {
+            list-style-type: none;
+        }
+        
+        .resources-list li {
+            margin-bottom: 10px;
+            padding-right: 20px;
+            position: relative;
+        }
+        
+        .resources-list li::before {
+            content: "•";
+            position: absolute;
+            right: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .resources-list a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .resources-list a:hover {
+            text-decoration: underline;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+        
+        .nav-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color var(--transition-speed);
+        }
+        
+        .nav-button:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .back-to-home {
+            background-color: #6c757d;
+        }
+        
+        .back-to-home:hover {
+            background-color: #5a6268;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .scenario-title {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>سيناريوهات انتحال الشخصية</h1>
+                <p class="subtitle">فهم وتمييز والاستجابة لانتحال الشخصية عبر الإنترنت</p>
+            </div>
+        </header>
+        
+        <div class="breadcrumbs">
+            <a href="../index.html">الرئيسية</a> &gt; <a href="../index.html#understand-section">فهم السمية عبر الإنترنت</a> &gt; سيناريوهات انتحال الشخصية
+        </div>
+        
+        <div class="intro">
+            <h2 class="intro-title">ما هو انتحال الشخصية عبر الإنترنت؟</h2>
+            <p>انتحال الشخصية عبر الإنترنت هو عندما يتظاهر شخص ما بأنه شخص آخر عبر الإنترنت، غالبًا بإنشاء حسابات مزيفة باستخدام اسم الشخص وصوره ومعلوماته الشخصية. قد يكون الهدف هو خداع الآخرين، أو إلحاق الضرر بسمعة الشخص، أو الحصول على معلومات شخصية، أو التسبب في إحراج أو ضيق.</p>
+            <p>توضح السيناريوهات التالية الأشكال الشائعة لانتحال الشخصية عبر الإنترنت وتقدم إرشادات حول كيفية الاستجابة بفعالية.</p>
+        </div>
+        
+        <div class="scenario-container">
+            <div class="scenario">
+                <div class="scenario-header">
+                    <h3 class="scenario-title">السيناريو 1: حساب مزيف على وسائل التواصل الاجتماعي</h3>
+                    <p class="scenario-subtitle">منصة التواصل الاجتماعي</p>
+                </div>
+                <div class="scenario-content">
+                    <div class="scenario-description">
+                        <p>نورة، 15 عامًا، اكتشفت أن شخصًا ما أنشأ حسابًا مزيفًا باسمها وصورتها على منصة تواصل اجتماعي. الحساب المزيف ينشر تعليقات مسيئة ومحرجة للآخرين، مما جعل أصدقاءها وزملاءها في المدرسة يعتقدون أنها هي من تقوم بذلك.</p>
+                    </div>
+                    
+                    <div class="chat-container">
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">سارة:</span>
+                                <span class="message-time">4:15 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>نورة، لماذا تقولين أشياء سيئة عني على الإنترنت؟ كنت أعتقد أننا صديقات.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble sent">
+                            <div class="message-info">
+                                <span class="message-sender">نورة:</span>
+                                <span class="message-time">4:20 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>عن ماذا تتحدثين؟ لم أقل أي شيء سيء عنك!</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">سارة:</span>
+                                <span class="message-time">4:22 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>توقفي عن الكذب. رأيت ما كتبته على حسابك الجديد. لقد أرسلت لي لقطة شاشة.</p>
+                                <p>[صورة: لقطة شاشة لحساب يستخدم اسم وصورة نورة مع تعليقات مسيئة]</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble sent">
+                            <div class="message-info">
+                                <span class="message-sender">نورة:</span>
+                                <span class="message-time">4:25 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>هذا ليس حسابي! شخص ما ينتحل شخصيتي. لدي حساب واحد فقط وهو @nora_original. هذا الحساب مزيف!</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">سارة:</span>
+                                <span class="message-time">4:30 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>حقًا؟ لكن الحساب يستخدم صورك ويعرف أشياء عن مدرستنا...</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="impact-section">
+                        <h4 class="impact-title">التأثير المحتمل:</h4>
+                        <p>يمكن أن يؤدي انتحال الشخصية على وسائل التواصل الاجتماعي إلى:</p>
+                        <ul>
+                            <li>تدمير السمعة والعلاقات الاجتماعية</li>
+                            <li>فقدان الثقة من الأصدقاء والزملاء</li>
+                            <li>الضيق النفسي والقلق</li>
+                            <li>التنمر والمضايقات من الآخرين الذين يعتقدون أن الحساب المزيف حقيقي</li>
+                            <li>تأثيرات طويلة المدى على الفرص المستقبلية إذا رأى المعلمون أو أصحاب العمل المحتملون المحتوى المسيء</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="response-options">
+                        <h4 class="response-title">خيارات الاستجابة:</h4>
+                        
+                        <div class="options-container">
+                            <div class="option recommended">
+                                <span class="option-label">موصى به: الإبلاغ والتوثيق</span>
+                                <p>يجب على نورة إبلاغ منصة التواصل الاجتماعي عن الحساب المزيف على الفور. معظم المنصات لديها إجراءات محددة للإبلاغ عن انتحال الشخصية.</p>
+                                <p>يجب عليها توثيق الحساب المزيف بلقطات شاشة، بما في ذلك المنشورات المسيئة والمعلومات الشخصية المستخدمة.</p>
+                                <p>من المهم إخبار الوالدين والمدرسة، خاصة إذا كان المحتوى المنشور يؤثر على زملاء المدرسة.</p>
+                            </div>
+                            
+                            <div class="option not-recommended">
+                                <span class="option-label">غير موصى به: الرد على المنشورات المزيفة</span>
+                                <p>محاولة الرد على كل منشور من الحساب المزيف قد تؤدي إلى تفاقم الموقف وإعطاء المزيد من الاهتمام للمنتحل.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="expert-tip">
+                            <div class="expert-tip-title">نصيحة الخبير:</div>
+                            <p>أخبر أصدقاءك وعائلتك على الفور عن الحساب المزيف حتى لا ينخدعوا. يمكنك نشر تنبيه على حسابك الحقيقي يوضح أن هناك حسابًا مزيفًا ينتحل شخصيتك. اطلب من أصدقائك الإبلاغ عن الحساب المزيف أيضًا، فكلما زاد عدد البلاغات، زادت سرعة استجابة المنصة.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="scenario">
+                <div class="scenario-header">
+                    <h3 class="scenario-title">السيناريو 2: انتحال شخصية صديق في المراسلات</h3>
+                    <p class="scenario-subtitle">تطبيق المراسلة</p>
+                </div>
+                <div class="scenario-content">
+                    <div class="scenario-description">
+                        <p>أحمد، 14 عامًا، ترك هاتفه غير مقفل أثناء حصة الرياضة. استغل أحد زملائه الفرصة لإرسال رسائل محرجة إلى أصدقائه متظاهرًا بأنه أحمد، مما تسبب في سوء فهم وإحراج.</p>
+                    </div>
+                    
+                    <div class="chat-container">
+                        <div class="message-bubble sent">
+                            <div class="message-info">
+                                <span class="message-sender">"أحمد" (المنتحل):</span>
+                                <span class="message-time">1:15 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>مرحبًا يا محمد، أريد أن أعترف بشيء. أنا أعتقد أن عرضك التقديمي في الفصل كان سيئًا جدًا. كنت أضحك عليك مع الآخرين.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">محمد:</span>
+                                <span class="message-time">1:17 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>ماذا؟ لماذا تقول هذا؟ اعتقدت أنك قلت إنه كان جيدًا...</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble sent">
+                            <div class="message-info">
+                                <span class="message-sender">"أحمد" (المنتحل):</span>
+                                <span class="message-time">1:18 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>كنت أكذب فقط لأكون لطيفًا. أيضًا، هل يمكنك إرسال إجابات واجب الرياضيات؟ أنا كسول جدًا للقيام به بنفسي.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble sent">
+                            <div class="message-info">
+                                <span class="message-sender">أحمد (الحقيقي):</span>
+                                <span class="message-time">2:30 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>محمد، أنا آسف جدًا! شخص ما أخذ هاتفي أثناء حصة الرياضة وأرسل تلك الرسائل. لم أكن أنا! عرضك التقديمي كان رائعًا حقًا.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">محمد:</span>
+                                <span class="message-time">2:35 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>حقًا؟ كنت مستاءً جدًا. هل أنت متأكد أنك لم ترسل تلك الرسائل؟</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="impact-section">
+                        <h4 class="impact-title">التأثير المحتمل:</h4>
+                        <p>يمكن أن يؤدي انتحال الشخصية في المراسلات الخاصة إلى:</p>
+                        <ul>
+                            <li>تدمير الثقة بين الأصدقاء</li>
+                            <li>إحراج الضحية والمتلقين</li>
+                            <li>سوء فهم يصعب تصحيحه</li>
+                            <li>تأثير سلبي على العلاقات الاجتماعية</li>
+                            <li>انتهاك خصوصية الضحية</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="response-options">
+                        <h4 class="response-title">خيارات الاستجابة:</h4>
+                        
+                        <div class="options-container">
+                            <div class="option recommended">
+                                <span class="option-label">موصى به: التوضيح الفوري والأمان</span>
+                                <p>يجب على أحمد الاتصال بجميع الأصدقاء الذين قد تكون قد أُرسلت إليهم رسائل مزيفة وتوضيح الموقف على الفور.</p>
+                                <p>من المهم تأمين الهاتف بكلمة مرور أو بصمة إصبع قوية لمنع حدوث ذلك مرة أخرى.</p>
+                                <p>يجب إبلاغ المعلم أو المشرف عن الحادث، خاصة إذا كان قد تسبب في ضرر كبير.</p>
+                            </div>
+                            
+                            <div class="option not-recommended">
+                                <span class="option-label">غير موصى به: الانتقام</span>
+                                <p>محاولة الانتقام بفعل الشيء نفسه للشخص الذي انتحل شخصيتك ستؤدي فقط إلى تصعيد الموقف وقد تعرضك للمشاكل أيضًا.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="expert-tip">
+                            <div class="expert-tip-title">نصيحة الخبير:</div>
+                            <p>تعامل مع أجهزتك كما تتعامل مع مفاتيح منزلك - لا تتركها أبدًا دون رقابة أو غير مؤمنة. استخدم ميزات مثل القفل التلقائي بعد فترة قصيرة من عدم النشاط. تذكر أن استعادة الثقة قد تستغرق وقتًا، لذا كن صبورًا مع أصدقائك إذا كانوا مترددين في تصديقك في البداية.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="resources">
+            <h3 class="resources-title">موارد إضافية</h3>
+            <ul class="resources-list">
+                <li><a href="#">كيفية الإبلاغ عن انتحال الشخصية</a> - دليل للإبلاغ على مختلف المنصات</li>
+                <li><a href="#">حماية هويتك عبر الإنترنت</a> - نصائح لمنع انتحال الشخصية</li>
+                <li><a href="#">استعادة سمعتك</a> - خطوات للتعامل مع الآثار السلبية لانتحال الشخصية</li>
+                <li><a href="#">أمان الأجهزة</a> - كيفية تأمين هاتفك وأجهزتك الأخرى</li>
+            </ul>
+        </div>
+        
+        <div class="navigation-buttons">
+            <a href="scenario_exclusion.html" class="nav-button back-to-home">&larr; السابق: الإقصاء</a>
+            <a href="scenario_misinformation.html" class="nav-button">التالي: المعلومات المضللة &rarr;</a>
+        </div>
+    </div>
+</body>
+</html>

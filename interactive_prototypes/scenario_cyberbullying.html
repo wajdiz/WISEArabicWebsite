@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سيناريوهات التنمر الإلكتروني - تعليم السمية عبر الإنترنت</title>
+    <style>
+        :root {
+            --primary-color: #4e54c8;
+            --secondary-color: #8f94fb;
+            --accent-color: #ff6b6b;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --text-color: #333;
+            --light-bg: #f9f9f9;
+            --card-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            --transition-speed: 0.3s;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 10px;
+        }
+        
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .breadcrumbs {
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .breadcrumbs a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+        }
+        
+        .intro {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .intro-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .scenario-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .scenario {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .scenario-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+        }
+        
+        .scenario-title {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+        
+        .scenario-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .scenario-content {
+            padding: 20px;
+        }
+        
+        .scenario-description {
+            margin-bottom: 20px;
+        }
+        
+        .chat-container {
+            background-color: #f5f5f5;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .message-bubble {
+            max-width: 80%;
+            margin-bottom: 15px;
+            padding: 12px 15px;
+            border-radius: 18px;
+            position: relative;
+            font-size: 0.95rem;
+        }
+        
+        .received {
+            background-color: #e5e5ea;
+            align-self: flex-start;
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .sent {
+            background-color: #dcf8c6;
+            align-self: flex-end;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+            text-align: right;
+        }
+        
+        .message-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .message-sender {
+            font-weight: bold;
+            margin-left: 8px;
+        }
+        
+        .message-time {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        
+        .message-content {
+            word-break: break-word;
+        }
+        
+        .impact-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .impact-title {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .response-options {
+            margin-top: 20px;
+        }
+        
+        .response-title {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: background-color var(--transition-speed);
+        }
+        
+        .option:hover {
+            background-color: #e5e5ea;
+        }
+        
+        .option.recommended {
+            border-right: 4px solid var(--success-color);
+        }
+        
+        .option.not-recommended {
+            border-right: 4px solid var(--danger-color);
+        }
+        
+        .option-label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        
+        .expert-tip {
+            background-color: rgba(78, 84, 200, 0.1);
+            border-right: 4px solid var(--primary-color);
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px 0 0 8px;
+        }
+        
+        .expert-tip-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .resources {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .resources-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .resources-list {
+            list-style-type: none;
+        }
+        
+        .resources-list li {
+            margin-bottom: 10px;
+            padding-right: 20px;
+            position: relative;
+        }
+        
+        .resources-list li::before {
+            content: "•";
+            position: absolute;
+            right: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .resources-list a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .resources-list a:hover {
+            text-decoration: underline;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+        
+        .nav-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color var(--transition-speed);
+        }
+        
+        .nav-button:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .back-to-home {
+            background-color: #6c757d;
+        }
+        
+        .back-to-home:hover {
+            background-color: #5a6268;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .scenario-title {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>سيناريوهات التنمر الإلكتروني</h1>
+                <p class="subtitle">فهم وتمييز والاستجابة للتنمر الإلكتروني</p>
+            </div>
+        </header>
+        
+        <div class="breadcrumbs">
+            <a href="../index.html">الرئيسية</a> &gt; <a href="../index.html#understand-section">فهم السمية عبر الإنترنت</a> &gt; سيناريوهات التنمر الإلكتروني
+        </div>
+        
+        <div class="intro">
+            <h2 class="intro-title">ما هو التنمر الإلكتروني؟</h2>
+            <p>التنمر الإلكتروني هو استخدام وسائل الاتصال الرقمية للتنمر على شخص ما، عادة عن طريق إرسال رسائل ذات طبيعة تخويفية أو تهديدية. على عكس التنمر التقليدي، يمكن أن يحدث التنمر الإلكتروني على مدار 24 ساعة، ويصل إلى الشخص حتى عندما يكون وحيدًا، ويمكن أن يصل بسرعة إلى جمهور واسع.</p>
+            <p>توضح السيناريوهات التالية الأشكال الشائعة للتنمر الإلكتروني وتقدم إرشادات حول كيفية الاستجابة بفعالية.</p>
+        </div>
+        
+        <div class="scenario-container">
+            <div class="scenario">
+                <div class="scenario-header">
+                    <h3 class="scenario-title">السيناريو 1: تعليقات سلبية متكررة</h3>
+                    <p class="scenario-subtitle">منصة التواصل الاجتماعي</p>
+                </div>
+                <div class="scenario-content">
+                    <div class="scenario-description">
+                        <p>إيمان، 14 عامًا، تنشر صورًا لأعمالها الفنية على منصة للتواصل الاجتماعي. زميلها في الفصل، ياسر، يترك تعليقات سلبية على كل منشور خلال الأسبوعين الماضيين.</p>
+                    </div>
+                    
+                    <div class="chat-container">
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">إيمان:</span>
+                                <span class="message-time">3:45 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>أنهيت للتو هذه اللوحة لفصل الفنون! 🎨 #فخورة_بعملي</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">ياسر:</span>
+                                <span class="message-time">3:52 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>هذا فظيع. عليك التوقف عن المحاولة. لا أحد يحب "فنك" 🤣</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">إيمان:</span>
+                                <span class="message-time">4:01 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>هنا زاوية أخرى للوحة بإضاءة أفضل</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">ياسر:</span>
+                                <span class="message-time">4:03 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>لا تهم الزاوية، ما زالت سيئة. أنت تضيعين وقت الجميع بنشر هذه الأشياء 😂</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="impact-section">
+                        <h4 class="impact-title">التأثير المحتمل:</h4>
+                        <p>يمكن أن تؤدي التعليقات السلبية المتكررة إلى:</p>
+                        <ul>
+                            <li>انخفاض الثقة بالنفس والشعور بالقيمة الذاتية</li>
+                            <li>القلق بشأن مشاركة الأعمال الإبداعية</li>
+                            <li>الخوف من الذهاب إلى المدرسة ومواجهة المتنمر</li>
+                            <li>الانسحاب من الأنشطة الاجتماعية والإبداعية</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="response-options">
+                        <h4 class="response-title">خيارات الاستجابة:</h4>
+                        
+                        <div class="options-container">
+                            <div class="option recommended">
+                                <span class="option-label">موصى به: حظر وإبلاغ</span>
+                                <p>يمكن لإيمان استخدام ميزات الحظر والإبلاغ على المنصة لمنع ياسر من التعليق على منشوراتها وإبلاغ سلوكه إلى إدارة المنصة.</p>
+                                <p>يمكنها أيضًا التحدث مع والديها أو معلم تثق به حول الموقف للحصول على الدعم.</p>
+                            </div>
+                            
+                            <div class="option not-recommended">
+                                <span class="option-label">غير موصى به: الرد بالمثل</span>
+                                <p>قد تشعر إيمان بالرغبة في الرد بتعليقات سلبية على منشورات ياسر، لكن هذا قد يؤدي إلى تصعيد الموقف ويمكن أن يجعلها تبدو كمتنمرة أيضًا.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="expert-tip">
+                            <div class="expert-tip-title">نصيحة الخبير:</div>
+                            <p>احتفظ بأدلة على التنمر الإلكتروني عن طريق التقاط لقطات شاشة للتعليقات المسيئة. يمكن أن تكون هذه مفيدة إذا احتجت إلى إبلاغ السلوك إلى المدرسة أو منصة التواصل الاجتماعي أو، في الحالات الشديدة، إلى السلطات.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="scenario">
+                <div class="scenario-header">
+                    <h3 class="scenario-title">السيناريو 2: الاستبعاد المتعمد</h3>
+                    <p class="scenario-subtitle">مجموعة دردشة المدرسة</p>
+                </div>
+                <div class="scenario-content">
+                    <div class="scenario-description">
+                        <p>أحمد، 13 عامًا، اكتشف أن زملاءه في الفصل أنشأوا مجموعة دردشة للتخطيط لمشروع جماعي واستبعدوه عمدًا. بدأوا أيضًا في نشر لقطات شاشة من المحادثات الخاصة في المجموعة على وسائل التواصل الاجتماعي مع تعليقات ساخرة.</p>
+                    </div>
+                    
+                    <div class="chat-container">
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">سارة:</span>
+                                <span class="message-time">7:15 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>هل رأى أحد منشور أحمد؟ يتساءل لماذا لم يتم إضافته إلى المجموعة 😆</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">خالد:</span>
+                                <span class="message-time">7:17 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>لا أحد يريده في المجموعة. دعونا نستمر في تجاهله.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="message-bubble received">
+                            <div class="message-info">
+                                <span class="message-sender">ليلى:</span>
+                                <span class="message-time">7:20 م</span>
+                            </div>
+                            <div class="message-content">
+                                <p>لقد التقطت لقطة شاشة لرسالته الخاصة لي حيث يسأل عن المشروع. سأنشرها على انستغرام 🤣</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="impact-section">
+                        <h4 class="impact-title">التأثير المحتمل:</h4>
+                        <p>يمكن أن يؤدي الاستبعاد المتعمد ومشاركة المحادثات الخاصة إلى:</p>
+                        <ul>
+                            <li>الشعور بالعزلة والرفض الاجتماعي</li>
+                            <li>صعوبة في الثقة بالآخرين في المستقبل</li>
+                            <li>انخفاض الأداء الأكاديمي</li>
+                            <li>القلق الاجتماعي والاكتئاب</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="response-options">
+                        <h4 class="response-title">خيارات الاستجابة:</h4>
+                        
+                        <div class="options-container">
+                            <div class="option recommended">
+                                <span class="option-label">موصى به: التحدث مع شخص بالغ موثوق به</span>
+                                <p>يجب على أحمد إخبار والديه أو معلم أو مستشار المدرسة عن الموقف. يمكن للبالغين المساعدة في التعامل مع الموقف بطريقة مناسبة.</p>
+                                <p>يمكن أيضًا الإبلاغ عن مشاركة المحادثات الخاصة إلى منصات التواصل الاجتماعي لأنها تنتهك شروط الخدمة.</p>
+                            </div>
+                            
+                            <div class="option not-recommended">
+                                <span class="option-label">غير موصى به: محاولة الانتقام</span>
+                                <p>قد يشعر أحمد بالرغبة في الانتقام من خلال نشر أشياء سلبية عن زملائه في الفصل أو محاولة إنشاء مجموعة منافسة لاستبعادهم. لكن هذا سيؤدي فقط إلى تفاقم الموقف وقد يجعله يبدو كمتنمر أيضًا.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="expert-tip">
+                            <div class="expert-tip-title">نصيحة الخبير:</div>
+                            <p>تذكر أن الاستبعاد المتعمد هو شكل من أشكال التنمر. لا تلم نفسك على أفعال الآخرين. ابحث عن أصدقاء إيجابيين وداعمين يقدرونك لمن أنت.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="resources">
+            <h3 class="resources-title">موارد إضافية</h3>
+            <ul class="resources-list">
+                <li><a href="#">خط المساعدة الوطني للتنمر</a> - خدمة دعم سرية للأطفال المتأثرين بالتنمر</li>
+                <li><a href="#">مركز السلامة عبر الإنترنت</a> - نصائح وموارد للتعامل مع التنمر الإلكتروني</li>
+                <li><a href="#">دليل الآباء للتنمر الإلكتروني</a> - معلومات للآباء حول كيفية دعم أطفالهم</li>
+                <li><a href="#">تطبيق الإبلاغ عن التنمر</a> - أداة للإبلاغ عن حوادث التنمر بشكل مجهول</li>
+            </ul>
+        </div>
+        
+        <div class="navigation-buttons">
+            <a href="../index.html" class="nav-button back-to-home">العودة إلى الرئيسية</a>
+            <a href="scenario_doxing.html" class="nav-button">التالي: كشف المعلومات الشخصية &rarr;</a>
+        </div>
+    </div>
+</body>
+</html>
